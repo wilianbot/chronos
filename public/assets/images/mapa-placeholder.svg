@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+  <title id="title">Mapa histórico simplificado</title>
+  <desc id="desc">Diagrama em estilo de pergaminho com rotas e pontos de expansão territorial.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#efe0bd"/>
+      <stop offset="1" stop-color="#cfa660"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="520" fill="url(#paper)"/>
+  <path d="M80 350C130 210 250 145 385 190c105-120 320-80 420 55-70 155-240 180-365 95-110 110-250 95-360 10Z" fill="#d7b779" stroke="#7f5425" stroke-width="8"/>
+  <path d="M120 330C220 260 350 225 460 220c115-5 210 35 305 100" fill="none" stroke="#6e2334" stroke-width="14" stroke-linecap="round" stroke-dasharray="28 22"/>
+  <g fill="#14263d" stroke="#f2d07a" stroke-width="7">
+    <circle cx="150" cy="320" r="20"/>
+    <circle cx="310" cy="250" r="20"/>
+    <circle cx="475" cy="220" r="20"/>
+    <circle cx="640" cy="260" r="20"/>
+    <circle cx="760" cy="320" r="26"/>
+  </g>
+</svg>
