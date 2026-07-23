@@ -3,6 +3,7 @@ import { personagemImages } from "../data/personagemImages";
 import { FALLBACK_IMAGE_SRC, isLocalAssetImageSrc, normalizeImageSrc } from "../lib/images";
 import { normalizar, ordenarEventos } from "../lib/history";
 import { mythologyReviewItems } from "./mythologyService";
+import { mythologyTreeReviewItems } from "./mythologyTreeService";
 import type { Acontecimento, ComparadorCivilizacao, Personagem, PerguntaRevisao } from "../types";
 
 export type Tema = "claro" | "escuro";
@@ -139,7 +140,8 @@ const bancoRevisao = [
   ...perguntasExtras,
   ...perguntasGeradasPorEvento,
   ...perguntasGeradasPorPersonagem,
-  ...mythologyReviewItems()
+  ...mythologyReviewItems(),
+  ...mythologyTreeReviewItems()
 ];
 
 export function imagem(src?: string) {

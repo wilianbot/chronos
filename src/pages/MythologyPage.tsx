@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { DeityComparison } from "../components/mythology/DeityComparison";
 import { DeityGrid } from "../components/mythology/DeityGrid";
 import { MythologyFamilyTree } from "../components/mythology/MythologyFamilyTree";
@@ -30,6 +31,11 @@ export function MythologyPage() {
         <div className="result-count" aria-live="polite">
           {deities.length} divindade{deities.length === 1 ? "" : "s"} encontrada{deities.length === 1 ? "" : "s"}
         </div>
+        <div className="filter-actions mythology-actions">
+          <Link className="button primary" to={`/mitologia/arvore?mitologia=${selectedTree}`}>
+            Explorar árvore genealógica
+          </Link>
+        </div>
         <DeityGrid deities={deities} favorites={favoritos} onFavorite={alternarFavorito} />
       </section>
 
@@ -46,6 +52,9 @@ export function MythologyPage() {
           mythology={selectedTree as MythologyId}
           onMythologyChange={(value) => updateFilter("mythology", value)}
         />
+        <Link className="button secondary" to={`/mitologia/arvore?mitologia=${selectedTree}`}>
+          Abrir grafo interativo completo
+        </Link>
       </section>
 
       <section className="section">

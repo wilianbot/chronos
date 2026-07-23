@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { ArrowUp, Landmark, Menu, Moon, PanelLeftClose, PanelLeftOpen, Sun, X } from "lucide-react";
 import { useAppContext } from "../../hooks/useAppContext";
+import { useDocumentMeta } from "../../hooks/useDocumentMeta";
 import { appRoutes } from "../../app/routes";
 import { EventModal } from "../timeline/EventModal";
 
 export function AppLayout() {
+  useDocumentMeta();
   const [mobileOpen, setMobileOpen] = useState(false);
   const {
     tema,
@@ -66,6 +68,12 @@ export function AppLayout() {
         <footer className="app-footer">
           <span>Jornada pela História</span>
           <span>Museu digital educacional com progresso salvo localmente.</span>
+          <nav aria-label="Links institucionais">
+            <Link to="/sobre">Sobre</Link>
+            <Link to="/privacidade">Privacidade</Link>
+            <Link to="/termos">Termos</Link>
+            <Link to="/contato">Contato</Link>
+          </nav>
         </footer>
       </div>
 

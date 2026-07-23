@@ -4,6 +4,7 @@ import { obterLocalEvento } from "../../data/geo";
 import { categoriaCores } from "../../services/historyCatalog";
 import { normalizar } from "../../lib/history";
 import type { Acontecimento } from "../../types";
+import { createHistoryPointOptions } from "./historyPointMarker";
 import { getAvailableMapProviders, tileLayerOptions } from "./mapProviders";
 
 type ViteImportMeta = ImportMeta & {
@@ -28,6 +29,7 @@ export function HistoryMap({
   const mapElement = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.LayerGroup | null>(null);
+  const markerRendererRef = useRef<L.Canvas | null>(null);
   const [mapReady, setMapReady] = useState(false);
   const [tileProviderIndex, setTileProviderIndex] = useState(0);
   const [failedProviderIds, setFailedProviderIds] = useState<string[]>([]);
@@ -40,9 +42,11 @@ export function HistoryMap({
     const map = L.map(mapElement.current, {
       worldCopyJump: true,
       zoomControl: true,
-      minZoom: 2
+      minZoom: 2,
+      preferCanvas: true
     }).setView([34, 18], 3);
 
+    markerRendererRef.current = L.canvas({ padding: 0.5 });
     const layer = L.layerGroup().addTo(map);
     mapRef.current = map;
     layerRef.current = layer;
@@ -72,6 +76,7 @@ export function HistoryMap({
       map.remove();
       mapRef.current = null;
       layerRef.current = null;
+      markerRendererRef.current = null;
       setMapReady(false);
     };
   }, []);
@@ -132,15 +137,10 @@ export function HistoryMap({
     eventos.forEach((evento) => {
       const local = obterLocalEvento(evento);
       const cor = categoriaCores[normalizar(evento.categoria)] || "#b78d3b";
-      L.circleMarker([local.lat, local.lng], {
-        radius: 7,
-        color: "#f5e7bf",
-        weight: 1.5,
-        fillColor: cor,
-        fillOpacity: 0.92
-      })
+      L.circleMarker([local.lat, local.lng], createHistoryPointOptions(cor, markerRendererRef.current || undefined))
         .bindPopup(`<strong>${evento.ano}</strong><br />${evento.titulo}<br /><small>${local.nome}</small>`)
         .on("click", () => onSelecionar(evento))
+        .on("mouseover", (event) => event.target.bringToFront())
         .addTo(layer);
     });
   }, [eventos, onSelecionar]);

@@ -1,6 +1,6 @@
 # Jornada pela História - React + TypeScript
 
-Versão React + TypeScript do projeto educacional **Jornada pela História**. A aplicação organiza uma linha do tempo interativa da Antiguidade até o fim da Segunda Guerra Mundial, com filtros, mapa real, personagens, mitologia, comparador de civilizações e revisão rápida.
+Versão React + TypeScript do projeto educacional **Jornada pela História**. A aplicação organiza uma linha do tempo interativa da Antiguidade até o fim da Segunda Guerra Mundial, com filtros, mapa real, personagens, catálogo de mitologia grega e romana, comparador de civilizações, flashcards, revisão rápida, favoritos e progresso salvo localmente.
 
 ## Tecnologias
 
@@ -42,6 +42,8 @@ Comandos de qualidade:
 npm run test
 npm run lint
 npm run format:check
+npm run validate:images
+npm run download:mythology-images
 npm run format
 ```
 
@@ -54,19 +56,23 @@ jornada-historia-react/
 |-- public/
 |   `-- assets/
 |       |-- images/
-|       `-- images/personagens/
+|       |-- images/personagens/
+|       `-- images/mitologia/
 |-- scripts/
 |   |-- export-legacy-data.mjs
-|   `-- download-personagem-images.mjs
+|   |-- download-personagem-images.mjs
+|   |-- download-mythology-images.mjs
+|   `-- validate-local-images.mjs
 |-- src/
 |   |-- app/                # rotas e router principal
 |   |-- components/         # layout, cards, mapa, timeline e estudo
 |   |-- context/            # estado global e persistência local
-|   |-- data/               # acervo histórico, mapas, geografia e ferramentas
+|   |-- data/               # acervo histórico, mitologia, mapas, geografia e ferramentas
 |   |-- hooks/              # filtros, mídia e jornadas
 |   |-- lib/                # regras de ordenação, normalização e revisão
 |   |-- pages/              # páginas carregadas por rota
-|   |-- services/           # catálogo derivado e fontes
+|   |-- services/           # catálogo derivado, mitologia e fontes
+|   |-- types/              # tipos específicos por domínio
 |   |-- App.tsx
 |   |-- main.tsx
 |   |-- styles.css
@@ -84,15 +90,15 @@ O projeto usa `react-router-dom` com `createBrowserRouter`. As páginas principa
 - `/linha-do-tempo` - acontecimentos com busca, filtros e modal completo.
 - `/periodos` - agrupamento por período histórico e progresso por período.
 - `/personagens` - galeria de personagens históricos.
-- `/mitologia` - deuses gregos, equivalentes romanos e árvore mítica.
+- `/mitologia` - catálogo de divindades gregas e romanas com busca, filtros, árvore e comparação cultural.
 - `/mapas` - mapa interativo e mapas históricos de referência.
 - `/comparacoes` - comparador de civilizações.
 - `/jornadas` - jornadas guiadas e cadeias de causa/consequência.
 - `/revisao` - revisão rápida com estatísticas.
 - `/flashcards` - cartões de memorização.
 - `/glossario` - conceitos históricos.
-- `/favoritos` - eventos e personagens favoritos.
-- `/progresso` - estudo salvo por período e desempenho da revisão.
+- `/favoritos` - eventos, personagens e divindades favoritas.
+- `/progresso` - estudo salvo por período, progresso por mitologia e desempenho da revisão.
 - `/eventos/:id`, `/personagens/:id` e `/deuses/:id` - links diretos para conteúdo específico.
 
 ## Conteúdo histórico incluído
@@ -101,10 +107,11 @@ Resumo atual do acervo:
 
 - 107 acontecimentos históricos na linha do tempo.
 - 38 personagens históricos na galeria.
-- 14 deuses gregos com equivalentes romanos.
+- 54 divindades no catálogo de mitologia: 28 gregas e 26 romanas.
+- 27 imagens locais de mitologia baixadas e validadas, com manifesto de créditos.
 - 10 referências cartográficas históricas.
 - 10 perguntas fixas de revisão rápida em `src/data/generated.ts`.
-- 158 itens possíveis no banco de revisão em tempo de execução: perguntas fixas, 3 perguntas extras, 107 perguntas geradas por acontecimento e 38 perguntas geradas por personagem.
+- 305 itens possíveis no banco de revisão em tempo de execução: perguntas fixas, 3 perguntas extras, 107 perguntas geradas por acontecimento, 38 perguntas geradas por personagem e perguntas geradas a partir das divindades.
 - 7 jornadas guiadas com capítulos em ordem.
 - 3 cadeias de causas e consequências.
 - 10 flashcards de memorização.
@@ -142,16 +149,23 @@ O aplicativo usa `localStorage` para salvar:
 
 - tema claro ou escuro;
 - acontecimentos marcados como estudados;
-- favoritos, incluindo eventos e personagens;
+- favoritos, incluindo eventos, personagens e divindades;
 - perguntas marcadas como revisadas;
 - último acontecimento aberto, usado pelo botão “Continuar de onde parei”.
 
-Também há progresso geral e progresso por período. Cada card de período mostra algo no formato:
+Também há progresso geral, progresso por período e progresso por mitologia. Cada card de período mostra algo no formato:
 
 ```text
 Grécia Antiga — 64% estudado (17/27)
 Roma Antiga — 31% estudado (5/15)
 Segunda Guerra Mundial — 10% estudado (1/9)
+```
+
+O progresso de mitologia reutiliza a chave antiga `jh-react-estudados`, sem migração destrutiva:
+
+```text
+Mitologia Grega — 8 de 28 divindades estudadas
+Mitologia Romana — 4 de 26 divindades estudadas
 ```
 
 ### Busca e filtros
@@ -208,18 +222,20 @@ Foram adicionadas ferramentas para estudar por percurso, conexão e memorizaçã
 - **Mapa de causas e consequências:** 3 cadeias históricas conectam eventos relacionados, como Guerras Médicas até Macedônia, República Romana até Augusto e Versalhes até 1945.
 - **Flashcards:** 10 cartões de memorização com frente, verso e categoria.
 - **Glossário histórico:** 12 termos com definição e exemplo, incluindo pólis, helenismo, falange, república, império, democracia direta, absolutismo, imperialismo, nacionalismo, totalitarismo, armistício e sobre-expansão imperial.
-- **Árvore dos deuses:** diagrama simplificado de Gaia, Urano, Titãs, Cronos, Reia e os principais olímpicos, sempre identificado como tradição mítica.
+- **Catálogo de mitologia:** 54 divindades gregas e romanas com filtros, busca, imagens, símbolos, domínios, relações familiares, culto, páginas individuais e correspondências culturais aproximadas.
+- **Árvore dos deuses:** diagrama por mitologia usando IDs reais do catálogo, sempre identificado como tradição mítica e não como genealogia universal.
 
 Esses dados ficam em `src/data/studyTools.ts`, separados da linha do tempo principal.
 
 ### Revisão rápida
 
-A revisão rápida combina perguntas fixas com perguntas geradas a partir do acervo. O banco efetivo atual possui 158 itens possíveis:
+A revisão rápida combina perguntas fixas com perguntas geradas a partir do acervo. O banco efetivo atual possui 305 itens possíveis:
 
 - 10 perguntas fixas cadastradas em `src/data/generated.ts`;
 - 3 perguntas extras adicionadas em `src/services/historyCatalog.ts`;
 - 107 perguntas geradas automaticamente a partir dos acontecimentos;
-- 38 perguntas geradas automaticamente a partir dos personagens.
+- 38 perguntas geradas automaticamente a partir dos personagens;
+- 147 perguntas geradas automaticamente a partir das divindades.
 
 Os formatos incluídos são:
 
@@ -231,7 +247,8 @@ Os formatos incluídos são:
 - identificação de datas;
 - conceitos-chave por período;
 - perguntas contextuais sobre a importância dos acontecimentos;
-- perguntas de associação entre personagem e contexto histórico.
+- perguntas de associação entre personagem e contexto histórico;
+- perguntas sobre domínios, símbolos e correspondências culturais aproximadas entre divindades gregas e romanas.
 
 O sistema salva perguntas revisadas, acertos, erros, itens difíceis e porcentagem por tema no `localStorage`. A revisão espaçada por data ainda está no roadmap.
 
@@ -277,6 +294,8 @@ Comandos validados na última execução:
 npm run test
 npm run lint
 npm run format:check
+npm run validate:images
+npm run download:mythology-images
 npm run build
 npm audit
 ```
@@ -311,7 +330,9 @@ Inclui civilização minoica, Creta, Palácio de Cnossos, mito do Minotauro, civ
 
 Inclui origem dos deuses, Gaia, Urano, Cronos, Titãs, Titanomaquia, Gigantomaquia, Prometeu, Pandora, Héracles, Perseu, Medusa, Teseu, Minotauro, Orfeu, Eurídice, Hades, Caronte, Estige/Aqueronte, Campos Elísios, Prados de Asfódelos e Tártaro.
 
-Também há cards para Zeus, Hera, Poseidon, Hades, Atena, Ares, Apolo, Ártemis, Afrodite, Hermes, Hefesto, Dionísio, Deméter e Perséfone, com domínio, símbolo, parentesco, pequena história e equivalente romano.
+O catálogo atual possui 28 divindades gregas: Zeus, Hera, Poseidon, Hades, Atena, Ares, Apolo, Ártemis, Afrodite, Hermes, Hefesto, Dionísio, Deméter, Perséfone, Héstia, Cronos, Reia, Gaia, Urano, Prometeu, Hécate, Nêmesis, Nike, Eros, Hipnos, Tânatos, Asclépio e Pan.
+
+Cada divindade possui ID estável, mitologia, cultura, categoria, domínios, símbolos, relações familiares, mitos principais, culto, contexto histórico, legado cultural, fontes e imagem com fallback. A interface diferencia deuses olímpicos, primordiais, titãs, ctônicos, personificações, heróis divinizados, divindades domésticas, de guerra, natureza, amor, morte, sabedoria, cura e limiar.
 
 ### Esparta e Atenas
 
@@ -335,7 +356,9 @@ Também inclui Império Romano, Augusto, Pax Romana, legiões, tropas auxiliares
 
 ### Mitologia Romana
 
-Inclui comparação entre deuses gregos e romanos: Zeus/Júpiter, Hera/Juno, Poseidon/Netuno, Atena/Minerva, Ares/Marte, Afrodite/Vênus, Hermes/Mercúrio, Ártemis/Diana, Hefesto/Vulcano, Hades/Plutão, Cronos/Saturno e Héracles/Hércules.
+O catálogo atual possui 26 divindades romanas: Júpiter, Juno, Netuno, Plutão, Minerva, Marte, Apolo, Diana, Vênus, Mercúrio, Vulcano, Baco, Ceres, Prosérpina, Vesta, Saturno, Ops, Cupido, Vitória, Fortuna, Jano, Quirino, Bellona, Fauno, Lares e Penates.
+
+A religião romana não é apresentada como simples renomeação da religião grega. Divindades como Jano, Quirino, Lares, Penates e Fortuna aparecem com funções próprias, e as correspondências com divindades gregas são exibidas como aproximações culturais.
 
 ### Idade Média
 
@@ -406,21 +429,33 @@ Quando a versão HTML existir, edite primeiro os dados em `../jornada-historia/j
 
 O mapa principal usa Leaflet. Os pontos são aproximados e ficam definidos em `src/data/geo.ts`. Para eventos muito amplos, o marcador usa uma cidade, batalha, capital ou região de referência.
 
-Provedores de mapa base disponíveis em `src/components/maps/HistoryMap.tsx`:
+Provedores de mapa base disponíveis em `src/components/maps/mapProviders.ts`:
 
+- OpenStreetMap;
 - Esri World Street Map;
 - Esri Topographic;
 - Esri World Imagery;
-- OpenStreetMap;
 - CARTO Voyager.
 
-O mapa tenta alternar automaticamente entre provedores quando há erro de tiles. Se a rede bloquear todos os provedores remotos, a aplicação mantém uma base local simplificada em SVG com os marcadores aproximados.
+O OpenStreetMap é o provedor padrão e usa `https://tile.openstreetmap.org/{z}/{x}/{y}.png`, sem chave de API. O mapa tenta alternar automaticamente entre provedores quando há erro real de tiles. Se a rede bloquear todos os provedores remotos, a aplicação mantém uma base local simplificada em SVG com os marcadores aproximados.
+
+O componente também observa mudanças de tamanho do contêiner e chama `invalidateSize` para evitar tiles invisíveis em rotas lazy, mudança de viewport e layouts responsivos.
 
 ## Imagens
 
-As imagens locais ficam em `public/assets/images`. Imagens remotas continuam usando fontes como Wikimedia Commons quando disponíveis.
+As imagens locais ficam em `public/assets/images`. Caminhos antigos iniciados por `public/` são normalizados para `/assets/...`, e URLs remotas são preservadas quando realmente usadas.
 
-O aplicativo possui fallback visual caso uma imagem não carregue. Ainda assim, a melhoria recomendada para uma versão mais robusta é baixar todas as imagens de domínio público para `public/assets/images` e manter um manifesto com:
+O aplicativo possui fallback visual caso uma imagem não carregue. Há validação para imagens locais de runtime e scripts para baixar personagens e mitologia sem salvar HTML como `.jpg`.
+
+Imagens de mitologia ficam em:
+
+```text
+public/assets/images/mitologia/grega
+public/assets/images/mitologia/romana
+public/assets/images/mitologia/image-credits.json
+```
+
+O manifesto registra:
 
 - nome do arquivo;
 - autor;
@@ -430,6 +465,8 @@ O aplicativo possui fallback visual caso uma imagem não carregue. Ainda assim, 
 - link da página original;
 - data de download.
 
+Status atual do download de mitologia: 27 de 54 imagens foram baixadas e validadas. As demais continuam usando fallback até que sejam substituídas por fontes estáveis e licenciadas.
+
 ## Melhorias futuras recomendadas
 
 ### Roadmap incremental de funcionalidades
@@ -438,8 +475,8 @@ As melhorias abaixo foram pensadas para serem adicionadas aos poucos, sem reescr
 
 Status atual:
 
-- Primeira versão implementada: jornadas guiadas, mapa de causas e consequências, flashcards, glossário, árvore genealógica dos deuses, favoritos, progresso e URLs próprias para eventos, personagens e deuses.
-- Próximas evoluções: salvar progresso por jornada, desempenho dos flashcards, revisão espaçada, linha do tempo comparativa, editor de acontecimentos e PWA.
+- Primeira versão implementada: jornadas guiadas, mapa de causas e consequências, flashcards, glossário, catálogo de mitologia, árvore genealógica por mitologia, favoritos, progresso e URLs próprias para eventos, personagens e deuses.
+- Próximas evoluções: completar imagens de mitologia que falharam no Wikimedia, salvar progresso por jornada, desempenho dos flashcards, revisão espaçada, linha do tempo comparativa, editor de acontecimentos e PWA.
 
 #### 1. Jornadas guiadas
 
@@ -660,29 +697,24 @@ Passos de implementação:
 - Cachear dados históricos;
 - Mostrar aviso quando estiver offline.
 
-#### 10. Árvore genealógica dos deuses
+#### 10. Catálogo e árvore de mitologia
 
-Criar uma visualização para parentescos da mitologia grega.
+Status atual:
 
-Exemplo:
+- catálogo tipado em `src/data/mythology`;
+- filtros por mitologia, categoria, domínio, gênero e busca textual;
+- URLs compartilháveis, como `/mitologia?mitologia=grega&categoria=olimpico`;
+- páginas individuais em `/deuses/:id`;
+- árvore por mitologia usando IDs reais;
+- correspondências culturais aproximadas entre gregos e romanos;
+- progresso por mitologia;
+- imagens locais com fallback e manifesto de créditos.
 
-```text
-Gaia + Urano
-↓
-Titãs
-↓
-Cronos + Reia
-↓
-Zeus, Hera, Poseidon, Hades, Deméter e Héstia
-```
+Pendências reais:
 
-Passos de implementação:
-
-- Criar `src/data/arvoreDeuses.ts`;
-- Representar relações de parentesco;
-- Criar visualização inicial em árvore vertical;
-- Permitir clicar em cada deus para abrir detalhes;
-- Diferenciar claramente mitologia de história documentada.
+- completar imagens que falharam no Wikimedia;
+- enriquecer textos com fontes primárias específicas por divindade;
+- adicionar novas mitologias usando o modelo já preparado.
 
 ### Ampliar história global
 

@@ -7,6 +7,11 @@ const routes = [
   "/periodos",
   "/personagens",
   "/mitologia",
+  "/mitologia/arvore",
+  "/mitologia/arvore?mitologia=grega&foco=zeus",
+  "/mitologia/arvore?mitologia=grega&foco=heracles",
+  "/mitologia/arvore?mitologia=grega&tipo=semideus",
+  "/mitologia/arvore?mitologia=romana&foco=romulo",
   "/mapas",
   "/comparacoes",
   "/jornadas",
@@ -14,7 +19,11 @@ const routes = [
   "/flashcards",
   "/glossario",
   "/favoritos",
-  "/progresso"
+  "/progresso",
+  "/sobre",
+  "/privacidade",
+  "/termos",
+  "/contato"
 ];
 const widths = [320, 375, 430, 768, 1024, 1440];
 
@@ -89,8 +98,9 @@ test("browser diagnostics", async ({ page }) => {
       }));
       routeMetrics.push(metric);
       if ([320, 375, 768, 1440].includes(width)) {
+        const safeRoute = route === "/" ? "home" : route.replace(/^\//, "").replace(/[^a-z0-9-]+/gi, "-");
         await page.screenshot({
-          path: `test-results/final-${width}-${route === "/" ? "home" : route.slice(1)}.png`,
+          path: `test-results/final-${width}-${safeRoute}.png`,
           fullPage: true
         });
       }

@@ -101,4 +101,38 @@ export const mythologyImageCredits: MythologyImageCredit[] = [
   sourceUrl: `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(fileName).replace(/%20/g, "_")}`
 }));
 
-export const imageByDeityId = new Map(mythologyImageCredits.map((credit) => [credit.deityId, credit]));
+export const localMythologyImageIds = new Set([
+  "afrodite",
+  "apolo-grego",
+  "ares",
+  "artemis",
+  "atena",
+  "dionisio",
+  "eros",
+  "hades",
+  "hefesto",
+  "hera",
+  "hermes",
+  "hestia",
+  "hipnos",
+  "nike",
+  "persefone",
+  "poseidon",
+  "prometeu",
+  "reia",
+  "urano",
+  "zeus",
+  "diana",
+  "jupiter",
+  "penates",
+  "plutao",
+  "proserpina",
+  "venus",
+  "vesta"
+]);
+
+export const imageByDeityId = new Map(
+  mythologyImageCredits
+    .filter((credit) => localMythologyImageIds.has(credit.deityId))
+    .map((credit) => [credit.deityId, credit])
+);

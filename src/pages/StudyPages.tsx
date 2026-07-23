@@ -14,6 +14,7 @@ import { EmptyState } from "../components/common/StateViews";
 import { useAppContext } from "../hooks/useAppContext";
 import { eventosPorId } from "../services/historyCatalog";
 import { allDeities, getDeityById, progressByMythology } from "../services/mythologyService";
+import { progressByEntityType } from "../services/mythologyTreeService";
 
 export function JourneysPage() {
   return (
@@ -127,6 +128,8 @@ export function FavoritesPage() {
 export function ProgressPage() {
   const { progressoPorPeriodo, estudados, revisaoStats, temasRevisao } = useAppContext();
   const progressoMitologia = progressByMythology(estudados);
+  const progressoTiposGregos = progressByEntityType(estudados, "grega");
+  const progressoTiposRomanos = progressByEntityType(estudados, "romana");
   return (
     <section className="section route-section">
       <div className="section-title">
@@ -182,6 +185,21 @@ export function ProgressPage() {
         ))}
       </div>
       <div className="review-topic-grid">
+        {[
+          ...progressoTiposGregos.map((item) => ({ ...item, scope: "Grega" })),
+          ...progressoTiposRomanos.map((item) => ({ ...item, scope: "Romana" }))
+        ].map((item) => (
+          <div key={`${item.scope}-${item.label}`}>
+            <span>{item.label}</span>
+            <strong>{item.percent}%</strong>
+            <small>
+              {item.scope}: {item.done}/{item.total} estudados
+            </small>
+            <i>
+              <b style={{ width: `${item.percent}%` }} />
+            </i>
+          </div>
+        ))}
         {temasRevisao.map((tema) => (
           <div key={tema.tema}>
             <span>{tema.tema}</span>

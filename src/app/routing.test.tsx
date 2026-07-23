@@ -105,6 +105,32 @@ describe("rotas e navegação", () => {
     expect(screen.getByRole("tab", { name: /Família/i })).toBeInTheDocument();
   });
 
+  it("abre rota dedicada da árvore mitológica com foco", async () => {
+    renderAt("/mitologia/arvore?mitologia=grega&foco=heracles");
+
+    expect(
+      await screen.findByRole("heading", { name: /Árvore genealógica interativa/i }, lazyRouteTimeout)
+    ).toBeInTheDocument();
+    expect((await screen.findAllByText("Héracles", undefined, lazyRouteTimeout)).length).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: /Pular canvas/i })).toHaveAttribute("href", "#myth-tree-textual");
+  });
+
+  it("interpreta filtro de semideus em português pela URL", async () => {
+    renderAt("/mitologia/arvore?mitologia=grega&tipo=semideus");
+
+    expect(
+      await screen.findByRole("heading", { name: /Árvore genealógica interativa/i }, lazyRouteTimeout)
+    ).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: /Tipo/i })).toHaveValue("demigod");
+  });
+
+  it("abre árvore romana separada com Rômulo", async () => {
+    renderAt("/mitologia/arvore?mitologia=romana&foco=romulo");
+
+    expect((await screen.findAllByText("Rômulo", undefined, lazyRouteTimeout)).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Mitologia Romana/i)).toBeInTheDocument();
+  });
+
   it("favorita deuses usando a chave antiga de favoritos", async () => {
     const user = userEvent.setup();
     renderAt("/deuses/jupiter");

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { getTreeUrl } from "../../services/mythologyTreeService";
 import type { Deity } from "../../types/mythology";
 import { DeityFamily } from "./DeityFamily";
 import { DeityRelations } from "./DeityRelations";
@@ -66,6 +68,27 @@ export function DeityDetails({ deity }: { deity: Deity }) {
         )}
         {active === "family" && (
           <>
+            <div className="deity-prose family-tree-callout">
+              <h3>Família e genealogia</h3>
+              <p>
+                O grafo separa genealogias gregas e romanas, identifica relações alternativas e mostra correspondências
+                culturais sem tratá-las como parentesco.
+              </p>
+              <Link
+                className="button primary compact"
+                to={getTreeUrl({
+                  id: deity.id,
+                  name: deity.name,
+                  mythology: deity.mythology,
+                  culture: deity.culture,
+                  entityType: "deity",
+                  categories: [],
+                  shortDescription: deity.shortDescription
+                })}
+              >
+                Ver na árvore genealógica
+              </Link>
+            </div>
             <DeityFamily deity={deity} />
             <DeityRelations deity={deity} />
           </>

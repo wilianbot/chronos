@@ -13,6 +13,12 @@ const CharactersPage = lazy(() =>
 const MythologyPage = lazy(() =>
   import("../pages/MythologyPage").then((module) => ({ default: module.MythologyPage }))
 );
+const MythologyTreePage = lazy(() =>
+  import("../pages/MythologyTreePage").then((module) => ({ default: module.MythologyTreePage }))
+);
+const MythologyEntityPage = lazy(() =>
+  import("../pages/MythologyTreePage").then((module) => ({ default: module.MythologyEntityPage }))
+);
 const MapsPage = lazy(() => import("../pages/MapsPage").then((module) => ({ default: module.MapsPage })));
 const ComparisonsPage = lazy(() =>
   import("../pages/ComparisonsPage").then((module) => ({ default: module.ComparisonsPage }))
@@ -30,6 +36,14 @@ const CharacterDetailPage = lazy(() =>
   import("../pages/StudyPages").then((module) => ({ default: module.CharacterDetailPage }))
 );
 const GodDetailPage = lazy(() => import("../pages/StudyPages").then((module) => ({ default: module.GodDetailPage })));
+const AboutPage = lazy(() => import("../pages/InstitutionalPages").then((module) => ({ default: module.AboutPage })));
+const PrivacyPage = lazy(() =>
+  import("../pages/InstitutionalPages").then((module) => ({ default: module.PrivacyPage }))
+);
+const TermsPage = lazy(() => import("../pages/InstitutionalPages").then((module) => ({ default: module.TermsPage })));
+const ContactPage = lazy(() =>
+  import("../pages/InstitutionalPages").then((module) => ({ default: module.ContactPage }))
+);
 const NotFoundPage = lazy(() => import("../pages/StudyPages").then((module) => ({ default: module.NotFoundPage })));
 
 function page(Component: ComponentType) {
@@ -51,6 +65,10 @@ export function createAppRouter() {
         { path: "periodos", element: page(PeriodsPage) },
         { path: "personagens", element: page(CharactersPage) },
         { path: "mitologia", element: page(MythologyPage) },
+        { path: "mitologia/arvore", element: page(MythologyTreePage) },
+        { path: "mitologia/entidades/:id", element: page(MythologyEntityPage) },
+        { path: "herois/:id", element: page(MythologyEntityPage) },
+        { path: "semideuses/:id", element: page(MythologyEntityPage) },
         { path: "mapas", element: page(MapsPage) },
         { path: "comparacoes", element: page(ComparisonsPage) },
         { path: "jornadas", element: page(JourneysPage) },
@@ -62,6 +80,10 @@ export function createAppRouter() {
         { path: "eventos/:id", element: page(EventDetailPage) },
         { path: "personagens/:id", element: page(CharacterDetailPage) },
         { path: "deuses/:id", element: page(GodDetailPage) },
+        { path: "sobre", element: page(AboutPage) },
+        { path: "privacidade", element: page(PrivacyPage) },
+        { path: "termos", element: page(TermsPage) },
+        { path: "contato", element: page(ContactPage) },
         { path: "*", element: page(NotFoundPage) }
       ]
     }

@@ -1,0 +1,2 @@
+# No advertising seller is configured yet.
+# Add the authorized seller line here before enabling ads.
