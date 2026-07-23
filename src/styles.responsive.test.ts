@@ -20,4 +20,16 @@ describe("CSS responsivo", () => {
   it("respeita redução de movimento", () => {
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
   });
+
+  it("bloqueia overflow horizontal global e protege tiles do Leaflet", () => {
+    expect(css).toMatch(/html\s*\{[\s\S]*overflow-x:\s*hidden;/);
+    expect(css).toMatch(/body\s*\{[\s\S]*min-width:\s*320px;[\s\S]*overflow-x:\s*hidden;/);
+    expect(css).toMatch(/\.leaflet-container img\.leaflet-tile\s*\{[\s\S]*max-width:\s*none !important;/);
+  });
+
+  it("define altura responsiva para o mapa e modal de tela cheia no celular", () => {
+    expect(css).toMatch(/\.map-visual\s*\{[\s\S]*min-height:\s*420px;[\s\S]*height:\s*min\(65vh,\s*720px\);/);
+    expect(css).toMatch(/@media \(max-width:\s*520px\)[\s\S]*\.modal\s*\{[\s\S]*max-height:\s*100dvh;/);
+    expect(css).toMatch(/@media \(max-width:\s*520px\)[\s\S]*\.map-visual\s*\{[\s\S]*height:\s*50vh;/);
+  });
 });

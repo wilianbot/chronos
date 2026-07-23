@@ -88,6 +88,33 @@ describe("rotas e navegação", () => {
     expect(await screen.findByRole("heading", { name: /Batalha de Maratona/i }, lazyRouteTimeout)).toBeInTheDocument();
   });
 
+  it("preserva filtros de mitologia pela URL", async () => {
+    renderAt("/mitologia?mitologia=grega&categoria=olimpico");
+
+    expect(
+      await screen.findByRole("heading", { name: /Catálogo de divindades/i }, lazyRouteTimeout)
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Grega/i })).toHaveClass("active");
+    expect(screen.getByRole("combobox", { name: /Categoria/i })).toHaveValue("olimpico");
+  });
+
+  it("abre página individual de divindade", async () => {
+    renderAt("/deuses/zeus");
+
+    expect(await screen.findByRole("heading", { name: "Zeus" }, lazyRouteTimeout)).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: /Família/i })).toBeInTheDocument();
+  });
+
+  it("favorita deuses usando a chave antiga de favoritos", async () => {
+    const user = userEvent.setup();
+    renderAt("/deuses/jupiter");
+
+    await screen.findByRole("heading", { name: "Júpiter" }, lazyRouteTimeout);
+    await user.click(screen.getByRole("button", { name: /Favoritar/i }));
+
+    expect(localStorage.getItem("jh-react-favoritos")).toContain("jupiter");
+  });
+
   it("abre menu móvel pelo botão hambúrguer", async () => {
     const user = userEvent.setup();
     renderAt("/");

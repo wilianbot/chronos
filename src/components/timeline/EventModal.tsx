@@ -1,6 +1,7 @@
 import { CheckCircle2, Copy, Heart, Share2, X } from "lucide-react";
 import { eventosOrdenados, fontesEvento, fontesHistoricas, imagem } from "../../services/historyCatalog";
 import { References } from "../common/Ui";
+import { ResilientImage } from "../ResilientImage";
 import type { Acontecimento } from "../../types";
 
 export function EventModal({
@@ -38,7 +39,22 @@ export function EventModal({
         <button className="icon-button modal-close" onClick={onFechar} aria-label="Fechar detalhes">
           <X size={20} />
         </button>
-        <img className="modal-image" src={imagem(fontesEvento(evento)[0])} alt={evento.alt || evento.titulo} />
+        <ResilientImage
+          className="modal-image"
+          sources={fontesEvento(evento).map((source) => imagem(source))}
+          alt={evento.alt || evento.titulo}
+          loading="eager"
+          fallback={
+            <div
+              className="modal-image modal-image-fallback"
+              role="img"
+              aria-label={`Imagem indisponível para ${evento.titulo}`}
+            >
+              <strong>{evento.ano}</strong>
+              <span>{evento.titulo}</span>
+            </div>
+          }
+        />
         <div className="modal-content">
           <div className="event-meta">
             <span>{evento.ano}</span>

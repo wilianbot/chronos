@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { CheckCircle2, Heart } from "lucide-react";
 import { ResilientImage } from "../ResilientImage";
-import { categoriaCores, deveUsarImagemNoCard, imagem } from "../../services/historyCatalog";
+import { categoriaCores, fontesEvento, imagem } from "../../services/historyCatalog";
 import { normalizar } from "../../lib/history";
 import type { Acontecimento } from "../../types";
 
@@ -52,7 +52,7 @@ export function TimelineEventCard({
 function EventImage({ evento }: { evento: Acontecimento }) {
   return (
     <ResilientImage
-      sources={deveUsarImagemNoCard(evento) ? [imagem(evento.imagem)] : []}
+      sources={fontesEvento(evento).map((source) => imagem(source))}
       alt={evento.alt || evento.titulo}
       fallback={<EventPlaceholder evento={evento} />}
     />

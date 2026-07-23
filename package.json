@@ -13,7 +13,9 @@
     "test:watch": "vitest --config vitest.config.ts",
     "preview": "vite preview",
     "sync:data": "node scripts/export-legacy-data.mjs",
-    "sync:personagens": "node scripts/download-personagem-images.mjs"
+    "sync:personagens": "node scripts/download-personagem-images.mjs",
+    "download:mythology-images": "node scripts/download-mythology-images.mjs",
+    "validate:images": "node scripts/validate-local-images.mjs"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.61.1",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",

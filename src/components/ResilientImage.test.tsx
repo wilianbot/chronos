@@ -33,4 +33,30 @@ describe("ResilientImage", () => {
 
     expect(screen.getByText("Imagem indisponível")).toBeInTheDocument();
   });
+
+  it("normaliza caminho public/assets e aplica atributos de imagem", () => {
+    render(
+      <ResilientImage
+        sources={["public/assets/images/partenon.jpg"]}
+        alt="Partenon"
+        objectFit="contain"
+        objectPosition="center top"
+        fallback={<div>Imagem indisponível</div>}
+      />
+    );
+
+    const imagem = screen.getByAltText("Partenon") as HTMLImageElement;
+    expect(imagem.getAttribute("src")).toBe("/assets/images/partenon.jpg");
+    expect(imagem.getAttribute("decoding")).toBe("async");
+    expect(imagem.style.objectFit).toBe("contain");
+    expect(imagem.style.objectPosition).toBe("center top");
+  });
+
+  it("não entra em loop quando a última fonte falha", () => {
+    render(<ResilientImage sources={["/quebrada.jpg"]} alt="Imagem" fallback={<div>Fallback final</div>} />);
+
+    fireEvent.error(screen.getByAltText("Imagem"));
+    expect(screen.getByText("Fallback final")).toBeInTheDocument();
+    expect(screen.queryByAltText("Imagem")).not.toBeInTheDocument();
+  });
 });

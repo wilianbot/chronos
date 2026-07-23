@@ -1,6 +1,8 @@
 import { acontecimentos, comparadores, perguntasRevisao, personagens } from "../data/generated";
 import { personagemImages } from "../data/personagemImages";
+import { FALLBACK_IMAGE_SRC, isLocalAssetImageSrc, normalizeImageSrc } from "../lib/images";
 import { normalizar, ordenarEventos } from "../lib/history";
+import { mythologyReviewItems } from "./mythologyService";
 import type { Acontecimento, ComparadorCivilizacao, Personagem, PerguntaRevisao } from "../types";
 
 export type Tema = "claro" | "escuro";
@@ -136,17 +138,19 @@ const bancoRevisao = [
   ...perguntasRevisao,
   ...perguntasExtras,
   ...perguntasGeradasPorEvento,
-  ...perguntasGeradasPorPersonagem
+  ...perguntasGeradasPorPersonagem,
+  ...mythologyReviewItems()
 ];
 
 export function imagem(src?: string) {
-  if (!src) return "/assets/images/mapa-placeholder.svg";
-  if (src.startsWith("assets/")) return `/${src}`;
-  return src;
+  return normalizeImageSrc(src);
 }
 
 export function fontesEvento(evento: Acontecimento) {
-  return [evento.imagem, imagemPadraoPeriodo[evento.periodo], "assets/images/mapa-placeholder.svg"].filter(Boolean);
+  const fontes = [];
+  if (isLocalAssetImageSrc(evento.imagem)) fontes.push(evento.imagem);
+  fontes.push(imagemPadraoPeriodo[evento.periodo], FALLBACK_IMAGE_SRC);
+  return Array.from(new Set(fontes.filter(Boolean)));
 }
 
 const imagensLocaisEspecificas = new Set([
@@ -168,7 +172,12 @@ export function deveUsarImagemNoCard(evento: Acontecimento) {
 
 export function fontesPersonagem(personagem: Personagem) {
   const imagensLocais = personagemImages as Record<string, string>;
-  return [imagensLocais[personagem.id], personagem.fotoRemota, personagem.foto].filter(Boolean);
+  return [
+    imagensLocais[personagem.id],
+    isLocalAssetImageSrc(personagem.imagem) ? personagem.imagem : undefined,
+    imagemPadraoPeriodo[personagem.periodo],
+    FALLBACK_IMAGE_SRC
+  ].filter(Boolean);
 }
 
 export function fontesHistoricas(evento: Acontecimento) {

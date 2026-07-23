@@ -23,6 +23,7 @@ function carregarPersonagens() {
 }
 
 function extFromContentType(contentType = "") {
+  if (!contentType.startsWith("image/")) return "";
   if (contentType.includes("png")) return ".png";
   if (contentType.includes("webp")) return ".webp";
   if (contentType.includes("gif")) return ".gif";
@@ -33,6 +34,11 @@ function extFromContentType(contentType = "") {
 fs.mkdirSync(outputDir, { recursive: true });
 
 const manifest = {};
+const report = {
+  ok: [],
+  skipped: [],
+  failed: []
+};
 for (const personagem of carregarPersonagens()) {
   const fonte = personagem.fotoRemota?.startsWith("http")
     ? personagem.fotoRemota
@@ -43,6 +49,7 @@ for (const personagem of carregarPersonagens()) {
   if (!fonte) {
     if (personagem.foto?.startsWith("assets/")) {
       manifest[personagem.id] = `/${personagem.foto}`;
+      report.skipped.push(`${personagem.nome}: usando caminho local cadastrado`);
     }
     continue;
   }
@@ -56,22 +63,45 @@ for (const personagem of carregarPersonagens()) {
     });
 
     if (!response.ok) {
-      console.warn(`Falhou ${personagem.nome}: ${response.status} ${fonte}`);
+      const message = `Falhou ${personagem.nome}: ${response.status} ${fonte}`;
+      report.failed.push(message);
+      console.warn(message);
       continue;
     }
 
-    const ext = extFromContentType(response.headers.get("content-type") || "");
+    const contentType = response.headers.get("content-type") || "";
+    const ext = extFromContentType(contentType);
+    if (!ext) {
+      const message = `Falhou ${personagem.nome}: tipo inválido ${contentType || "sem content-type"} em ${fonte}`;
+      report.failed.push(message);
+      console.warn(message);
+      continue;
+    }
+
     const fileName = `${personagem.id}${ext}`;
     const filePath = path.join(outputDir, fileName);
     const buffer = Buffer.from(await response.arrayBuffer());
+    if (buffer.length === 0) {
+      const message = `Falhou ${personagem.nome}: arquivo vazio em ${fonte}`;
+      report.failed.push(message);
+      console.warn(message);
+      continue;
+    }
+
     fs.writeFileSync(filePath, buffer);
     manifest[personagem.id] = `/assets/images/personagens/${fileName}`;
+    report.ok.push(`${personagem.nome} -> ${fileName}`);
     console.log(`OK ${personagem.nome} -> ${fileName}`);
   } catch (error) {
-    console.warn(`Falhou ${personagem.nome}: ${error.message}`);
+    const message = `Falhou ${personagem.nome}: ${error.message}`;
+    report.failed.push(message);
+    console.warn(message);
   }
 }
 
 const generated = `export const personagemImages = ${JSON.stringify(manifest, null, 2)} satisfies Record<string, string>;\n`;
 fs.writeFileSync(manifestPath, generated, "utf8");
 console.log(`Manifesto gerado: ${Object.keys(manifest).length} imagens.`);
+console.log(
+  `Relatório: ${report.ok.length} baixadas, ${report.skipped.length} locais preservadas, ${report.failed.length} falhas.`
+);

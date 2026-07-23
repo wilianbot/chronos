@@ -1,16 +1,19 @@
 import { Link, useParams } from "react-router-dom";
-import { deusesGregos, personagens } from "../data/generated";
+import { personagens } from "../data/generated";
 import { CauseEffectChains } from "../components/study/CauseEffectChains";
 import { FlashcardDeck } from "../components/study/FlashcardDeck";
 import { Glossary } from "../components/study/Glossary";
 import { GuidedJourneys } from "../components/study/GuidedJourneys";
 import { QuickReview } from "../components/study/QuickReview";
 import { CharacterCard } from "../components/characters/CharacterCard";
-import { GodCard } from "../components/mythology/GodCard";
+import { DeityCard } from "../components/mythology/DeityCard";
+import { DeityDetails } from "../components/mythology/DeityDetails";
+import { DeityHeader } from "../components/mythology/DeityHeader";
 import { TimelineEventCard } from "../components/timeline/TimelineEventCard";
 import { EmptyState } from "../components/common/StateViews";
 import { useAppContext } from "../hooks/useAppContext";
 import { eventosPorId } from "../services/historyCatalog";
+import { allDeities, getDeityById, progressByMythology } from "../services/mythologyService";
 
 export function JourneysPage() {
   return (
@@ -75,14 +78,15 @@ export function FavoritesPage() {
   const { favoritos, estudados, abrirEvento, alternarFavorito, alternarEstudado } = useAppContext();
   const eventosFavoritos = [...favoritos].map((id) => eventosPorId.get(id)).filter(Boolean);
   const personagensFavoritos = personagens.filter((personagem) => favoritos.has(personagem.id));
+  const deusesFavoritos = allDeities.filter((deity) => favoritos.has(deity.id));
 
   return (
     <section className="section route-section">
       <div className="section-title">
         <span className="eyebrow">Favoritos</span>
-        <h2>Eventos e personagens favoritos</h2>
+        <h2>Eventos, personagens e deuses favoritos</h2>
       </div>
-      {eventosFavoritos.length || personagensFavoritos.length ? (
+      {eventosFavoritos.length || personagensFavoritos.length || deusesFavoritos.length ? (
         <>
           <div className="timeline-list">
             {eventosFavoritos.map((evento) => (
@@ -95,6 +99,11 @@ export function FavoritesPage() {
                 onFavorito={() => alternarFavorito(evento!.id)}
                 onEstudado={() => alternarEstudado(evento!.id)}
               />
+            ))}
+          </div>
+          <div className="deity-catalog-grid">
+            {deusesFavoritos.map((deity) => (
+              <DeityCard key={deity.id} deity={deity} favorite onFavorite={() => alternarFavorito(deity.id)} />
             ))}
           </div>
           <div className="people-grid">
@@ -117,6 +126,7 @@ export function FavoritesPage() {
 
 export function ProgressPage() {
   const { progressoPorPeriodo, estudados, revisaoStats, temasRevisao } = useAppContext();
+  const progressoMitologia = progressByMythology(estudados);
   return (
     <section className="section route-section">
       <div className="section-title">
@@ -150,6 +160,23 @@ export function ProgressPage() {
             </p>
             <div className="progress-line">
               <i style={{ width: `${dados.percentual}%` }} />
+            </div>
+          </article>
+        ))}
+      </div>
+      <div className="section-title compact-title">
+        <span className="eyebrow">Mitologia</span>
+        <h3>Histórias de divindades lidas</h3>
+      </div>
+      <div className="period-grid">
+        {progressoMitologia.map(({ mythology, total, done, percent }) => (
+          <article className="mini-card" key={mythology.id}>
+            <h3>{mythology.name}</h3>
+            <p>
+              {done} de {total} divindades estudadas
+            </p>
+            <div className="progress-line">
+              <i style={{ width: `${percent}%` }} />
             </div>
           </article>
         ))}
@@ -210,11 +237,24 @@ export function CharacterDetailPage() {
 
 export function GodDetailPage() {
   const { id } = useParams();
-  const deus = deusesGregos.find((item) => item.nome.toLowerCase() === id?.toLowerCase());
+  const { favoritos, estudados, alternarFavorito, alternarEstudado } = useAppContext();
+  const deus = getDeityById(id);
   if (!deus) return <NotFoundInline />;
+  const copiarLink = async () => {
+    await navigator.clipboard.writeText(`${location.origin}/deuses/${deus.id}`);
+  };
+
   return (
     <section className="section route-section">
-      <GodCard deus={deus} />
+      <DeityHeader
+        deity={deus}
+        favorite={favoritos.has(deus.id)}
+        studied={estudados.has(deus.id)}
+        onFavorite={() => alternarFavorito(deus.id)}
+        onStudied={() => alternarEstudado(deus.id)}
+        onCopyLink={copiarLink}
+      />
+      <DeityDetails deity={deus} />
     </section>
   );
 }

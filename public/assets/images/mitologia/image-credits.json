@@ -1,0 +1,245 @@
+[
+  {
+    "deityId": "zeus",
+    "file": "/assets/images/mitologia/grega/zeus.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Zeus_Otricoli_Pio-Clementino_Inv257.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Zeus%20Otricoli%20Pio-Clementino%20Inv257.jpg"
+  },
+  {
+    "deityId": "hera",
+    "file": "/assets/images/mitologia/grega/hera.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hera_Campana_Louvre_Ma2283.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Hera%20Campana%20Louvre%20Ma2283.jpg"
+  },
+  {
+    "deityId": "poseidon",
+    "file": "/assets/images/mitologia/grega/poseidon.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Poseidon_sculpture_Copenhagen_2005_hand.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Poseidon%20sculpture%20Copenhagen%202005%20hand.jpg"
+  },
+  {
+    "deityId": "hades",
+    "file": "/assets/images/mitologia/grega/hades.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hades_and_Cerberus_in_Heraklion_Museum.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Hades%20and%20Cerberus%20in%20Heraklion%20Museum.jpg"
+  },
+  {
+    "deityId": "atena",
+    "file": "/assets/images/mitologia/grega/atena.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Athena_Varvakeion_Glyptothek_Munich_213.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Athena%20Varvakeion%20Glyptothek%20Munich%20213.jpg"
+  },
+  {
+    "deityId": "ares",
+    "file": "/assets/images/mitologia/grega/ares.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ares_Borghese_Louvre_Ma866_n2.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Ares%20Borghese%20Louvre%20Ma866%20n2.jpg"
+  },
+  {
+    "deityId": "apolo-grego",
+    "file": "/assets/images/mitologia/grega/apolo-grego.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Apollo_Belvedere_Pio-Clementino_Inv1015.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Apollo%20Belvedere%20Pio-Clementino%20Inv1015.jpg"
+  },
+  {
+    "deityId": "artemis",
+    "file": "/assets/images/mitologia/grega/artemis.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Diane_de_Versailles_Leochares.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Diane%20de%20Versailles%20Leochares.jpg"
+  },
+  {
+    "deityId": "afrodite",
+    "file": "/assets/images/mitologia/grega/afrodite.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Venus_de_Milo_Louvre_Ma399_n4.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Venus%20de%20Milo%20Louvre%20Ma399%20n4.jpg"
+  },
+  {
+    "deityId": "hermes",
+    "file": "/assets/images/mitologia/grega/hermes.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hermes_Ingenui_Pio-Clementino_Inv544.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Hermes%20Ingenui%20Pio-Clementino%20Inv544.jpg"
+  },
+  {
+    "deityId": "hefesto",
+    "file": "/assets/images/mitologia/grega/hefesto.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hephaistos_Louvre_G150.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Hephaistos%20Louvre%20G150.jpg"
+  },
+  {
+    "deityId": "dionisio",
+    "file": "/assets/images/mitologia/grega/dionisio.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dionysos_Louvre_Ma87_n2.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Dionysos%20Louvre%20Ma87%20n2.jpg"
+  },
+  {
+    "deityId": "persefone",
+    "file": "/assets/images/mitologia/grega/persefone.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pinax_with_Persephone_and_Hades_from_Locri.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Pinax%20with%20Persephone%20and%20Hades%20from%20Locri.jpg"
+  },
+  {
+    "deityId": "hestia",
+    "file": "/assets/images/mitologia/grega/hestia.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hestia_Giustiniani.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Hestia%20Giustiniani.jpg"
+  },
+  {
+    "deityId": "reia",
+    "file": "/assets/images/mitologia/grega/reia.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rhea_presenting_the_stone_wrapped_in_cloth_to_Cronus.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Rhea%20presenting%20the%20stone%20wrapped%20in%20cloth%20to%20Cronus.jpg"
+  },
+  {
+    "deityId": "urano",
+    "file": "/assets/images/mitologia/grega/urano.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vasari_The_Mutiliation_of_Uranus_by_Saturn.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Vasari%20The%20Mutiliation%20of%20Uranus%20by%20Saturn.jpg"
+  },
+  {
+    "deityId": "prometeu",
+    "file": "/assets/images/mitologia/grega/prometeu.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Prometheus_Bound_-_Peter_Paul_Rubens.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Prometheus%20Bound%20-%20Peter%20Paul%20Rubens.jpg"
+  },
+  {
+    "deityId": "nike",
+    "file": "/assets/images/mitologia/grega/nike.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nike_of_Samothrace_Louvre_Ma2369_n4.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Nike%20of%20Samothrace%20Louvre%20Ma2369%20n4.jpg"
+  },
+  {
+    "deityId": "eros",
+    "file": "/assets/images/mitologia/grega/eros.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Eros_Farnese_Naples_MAN_6353.jpg",
+    "downloadedFrom": "https://upload.wikimedia.org/wikipedia/commons/4/45/Eros_Farnese_N%C3%A1poles_05.jpg"
+  },
+  {
+    "deityId": "hipnos",
+    "file": "/assets/images/mitologia/grega/hipnos.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hypnos_British_Museum_Bronze_Head.jpg",
+    "downloadedFrom": "https://upload.wikimedia.org/wikipedia/commons/5/59/Euphronios_krater_side_A_MET_L.2006.10.jpg"
+  },
+  {
+    "deityId": "jupiter",
+    "file": "/assets/images/mitologia/romana/jupiter.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jupiter_Smyrna_Louvre_Ma13.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Jupiter%20Smyrna%20Louvre%20Ma13.jpg"
+  },
+  {
+    "deityId": "plutao",
+    "file": "/assets/images/mitologia/romana/plutao.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pluto_Serapis_with_Cerberus_Statue.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Pluto%20Serapis%20with%20Cerberus%20Statue.jpg"
+  },
+  {
+    "deityId": "diana",
+    "file": "/assets/images/mitologia/romana/diana.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Diane_de_Versailles_Leochares.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Diane%20de%20Versailles%20Leochares.jpg"
+  },
+  {
+    "deityId": "venus",
+    "file": "/assets/images/mitologia/romana/venus.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Venus_de_Milo_Louvre_Ma399_n4.jpg",
+    "downloadedFrom": "https://commons.wikimedia.org/wiki/Special:FilePath/Venus%20de%20Milo%20Louvre%20Ma399%20n4.jpg"
+  },
+  {
+    "deityId": "proserpina",
+    "file": "/assets/images/mitologia/romana/proserpina.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Proserpina_sarcophagus_Louvre_Ma_312.jpg",
+    "downloadedFrom": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Marble_Statue_of_Persephone%2C_2nd_Century_AD_%2841410710410%29.jpg/3840px-Marble_Statue_of_Persephone%2C_2nd_Century_AD_%2841410710410%29.jpg"
+  },
+  {
+    "deityId": "vesta",
+    "file": "/assets/images/mitologia/romana/vesta.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vesta_Giustiniani_Louvre_Ma_2595.jpg",
+    "downloadedFrom": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Fresco_of_Vesta-Hestia_from_Pompeii.jpg"
+  },
+  {
+    "deityId": "penates",
+    "file": "/assets/images/mitologia/romana/penates.jpg",
+    "author": "Autor antigo ou artista histórico, conforme acervo",
+    "institution": "Wikimedia Commons / acervo indicado na página original",
+    "license": "Domínio público ou licença livre indicada na página original",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lararium_with_Penates_Pompeii.jpg",
+    "downloadedFrom": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/AR_serrate_denarius_of_C._Sulpicius_C._f._Galba.jpg/3840px-AR_serrate_denarius_of_C._Sulpicius_C._f._Galba.jpg"
+  }
+]

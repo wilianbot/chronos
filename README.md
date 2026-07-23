@@ -4,10 +4,12 @@ Versão React + TypeScript do projeto educacional **Jornada pela História**. A 
 
 ## Tecnologias
 
-- React
-- TypeScript
-- Vite
-- Leaflet / OpenStreetMap
+- React 18
+- TypeScript 5
+- Vite 7
+- React Router
+- Leaflet
+- Esri, OpenStreetMap e CARTO como provedores de mapa base
 - Lucide React
 - Vitest
 - Testing Library
@@ -47,23 +49,51 @@ npm run format
 
 ```text
 jornada-historia-react/
-├── index.html
-├── package.json
-├── public/
-│   └── assets/
-├── scripts/
-│   └── export-legacy-data.mjs
-├── src/
-│   ├── App.tsx
-│   ├── main.tsx
-│   ├── styles.css
-│   ├── types.ts
-│   └── data/
-│       ├── generated.ts
-│       ├── geo.ts
-│       └── studyTools.ts
-└── README.md
+|-- index.html
+|-- package.json
+|-- public/
+|   `-- assets/
+|       |-- images/
+|       `-- images/personagens/
+|-- scripts/
+|   |-- export-legacy-data.mjs
+|   `-- download-personagem-images.mjs
+|-- src/
+|   |-- app/                # rotas e router principal
+|   |-- components/         # layout, cards, mapa, timeline e estudo
+|   |-- context/            # estado global e persistência local
+|   |-- data/               # acervo histórico, mapas, geografia e ferramentas
+|   |-- hooks/              # filtros, mídia e jornadas
+|   |-- lib/                # regras de ordenação, normalização e revisão
+|   |-- pages/              # páginas carregadas por rota
+|   |-- services/           # catálogo derivado e fontes
+|   |-- App.tsx
+|   |-- main.tsx
+|   |-- styles.css
+|   `-- types.ts
+|-- vitest.config.ts
+|-- vite.config.ts
+`-- README.md
 ```
+
+## Páginas e rotas
+
+O projeto usa `react-router-dom` com `createBrowserRouter`. As páginas principais são carregadas com `lazy` e `Suspense`.
+
+- `/` - início, progresso geral, continuar estudo e favoritos recentes.
+- `/linha-do-tempo` - acontecimentos com busca, filtros e modal completo.
+- `/periodos` - agrupamento por período histórico e progresso por período.
+- `/personagens` - galeria de personagens históricos.
+- `/mitologia` - deuses gregos, equivalentes romanos e árvore mítica.
+- `/mapas` - mapa interativo e mapas históricos de referência.
+- `/comparacoes` - comparador de civilizações.
+- `/jornadas` - jornadas guiadas e cadeias de causa/consequência.
+- `/revisao` - revisão rápida com estatísticas.
+- `/flashcards` - cartões de memorização.
+- `/glossario` - conceitos históricos.
+- `/favoritos` - eventos e personagens favoritos.
+- `/progresso` - estudo salvo por período e desempenho da revisão.
+- `/eventos/:id`, `/personagens/:id` e `/deuses/:id` - links diretos para conteúdo específico.
 
 ## Conteúdo histórico incluído
 
@@ -73,7 +103,8 @@ Resumo atual do acervo:
 - 38 personagens históricos na galeria.
 - 14 deuses gregos com equivalentes romanos.
 - 10 referências cartográficas históricas.
-- 60 perguntas de revisão rápida, somando perguntas do acervo e perguntas extras no aplicativo.
+- 10 perguntas fixas de revisão rápida em `src/data/generated.ts`.
+- 158 itens possíveis no banco de revisão em tempo de execução: perguntas fixas, 3 perguntas extras, 107 perguntas geradas por acontecimento e 38 perguntas geradas por personagem.
 - 7 jornadas guiadas com capítulos em ordem.
 - 3 cadeias de causas e consequências.
 - 10 flashcards de memorização.
@@ -183,7 +214,14 @@ Esses dados ficam em `src/data/studyTools.ts`, separados da linha do tempo princ
 
 ### Revisão rápida
 
-A revisão rápida possui 60 perguntas no total. Os formatos incluídos são:
+A revisão rápida combina perguntas fixas com perguntas geradas a partir do acervo. O banco efetivo atual possui 158 itens possíveis:
+
+- 10 perguntas fixas cadastradas em `src/data/generated.ts`;
+- 3 perguntas extras adicionadas em `src/services/historyCatalog.ts`;
+- 107 perguntas geradas automaticamente a partir dos acontecimentos;
+- 38 perguntas geradas automaticamente a partir dos personagens.
+
+Os formatos incluídos são:
 
 - perguntas abertas;
 - verdadeiro ou falso;
@@ -191,9 +229,11 @@ A revisão rápida possui 60 perguntas no total. Os formatos incluídos são:
 - ordenação de eventos;
 - associação de personagem a acontecimento;
 - identificação de datas;
-- conceitos-chave por período.
+- conceitos-chave por período;
+- perguntas contextuais sobre a importância dos acontecimentos;
+- perguntas de associação entre personagem e contexto histórico.
 
-O sistema já salva perguntas marcadas como revisadas. Um sistema completo de acertos, dificuldade por tema e revisão só dos conteúdos difíceis ainda está no roadmap.
+O sistema salva perguntas revisadas, acertos, erros, itens difíceis e porcentagem por tema no `localStorage`. A revisão espaçada por data ainda está no roadmap.
 
 ### Acessibilidade
 
@@ -217,6 +257,8 @@ Já existe:
 - fallback para imagens quebradas;
 - tela de erro para falhas inesperadas e IDs duplicados;
 - estado inicial de carregamento;
+- rotas diretas com React Router para eventos, personagens e deuses;
+- páginas separadas para favoritos e progresso;
 - revisão com acerto, erro, dificuldade e porcentagem por tema;
 - ESLint configurado;
 - Prettier configurado;
@@ -226,7 +268,7 @@ Já existe:
 - testes automatizados para fallback de imagens quebradas;
 - testes automatizados para regras responsivas críticas;
 - build TypeScript validado;
-- Vite atualizado;
+- Vite 7 configurado;
 - `npm audit` sem vulnerabilidades conhecidas no momento da última verificação.
 
 Comandos validados na última execução:
@@ -345,7 +387,10 @@ Inclui comparações entre Atenas e Esparta, Grécia e Roma, República Romana e
 
 Inclui cidades-Estado gregas, Império Persa, conquistas de Alexandre, expansão da República Romana, maior extensão do Império Romano, divisão entre Oriente e Ocidente, Europa medieval, expansão napoleônica, alianças da Primeira Guerra Mundial e Eixo/Aliados na Segunda Guerra Mundial.
 
-O mapa interativo principal usa Leaflet com pontos aproximados em cidades, regiões, batalhas ou centros políticos de referência.
+Existem dois recursos de mapa:
+
+- **Mapa interativo:** usa Leaflet com marcadores aproximados para cidades, regiões, batalhas ou centros políticos de referência.
+- **Mapas históricos de referência:** 10 links cartográficos externos, principalmente Wikimedia Commons, usados para consulta visual de expansão territorial e alianças.
 
 ## Dados históricos
 
@@ -359,9 +404,17 @@ Quando a versão HTML existir, edite primeiro os dados em `../jornada-historia/j
 
 ## Mapa
 
-O mapa principal usa Leaflet com tiles do OpenStreetMap. Os pontos são aproximados e ficam definidos em `src/data/geo.ts`. Para eventos muito amplos, o marcador usa uma cidade, batalha, capital ou região de referência.
+O mapa principal usa Leaflet. Os pontos são aproximados e ficam definidos em `src/data/geo.ts`. Para eventos muito amplos, o marcador usa uma cidade, batalha, capital ou região de referência.
 
-O mapa precisa de internet para carregar os tiles do OpenStreetMap. Sem internet, a aplicação abre, mas o fundo do mapa pode não aparecer.
+Provedores de mapa base disponíveis em `src/components/maps/HistoryMap.tsx`:
+
+- Esri World Street Map;
+- Esri Topographic;
+- Esri World Imagery;
+- OpenStreetMap;
+- CARTO Voyager.
+
+O mapa tenta alternar automaticamente entre provedores quando há erro de tiles. Se a rede bloquear todos os provedores remotos, a aplicação mantém uma base local simplificada em SVG com os marcadores aproximados.
 
 ## Imagens
 
@@ -385,8 +438,8 @@ As melhorias abaixo foram pensadas para serem adicionadas aos poucos, sem reescr
 
 Status atual:
 
-- Primeira versão implementada: jornadas guiadas, mapa de causas e consequências, flashcards, glossário e árvore genealógica dos deuses.
-- Próximas evoluções: salvar progresso por jornada, desempenho dos flashcards, revisão espaçada, linha do tempo comparativa, editor de acontecimentos, URLs próprias e PWA.
+- Primeira versão implementada: jornadas guiadas, mapa de causas e consequências, flashcards, glossário, árvore genealógica dos deuses, favoritos, progresso e URLs próprias para eventos, personagens e deuses.
+- Próximas evoluções: salvar progresso por jornada, desempenho dos flashcards, revisão espaçada, linha do tempo comparativa, editor de acontecimentos e PWA.
 
 #### 1. Jornadas guiadas
 
@@ -563,7 +616,7 @@ Passos de implementação:
 
 #### 8. Links próprios para cada conteúdo
 
-Criar URLs diretas para eventos, personagens e deuses.
+URLs diretas para eventos, personagens e deuses já existem no router principal.
 
 Exemplos:
 
@@ -573,12 +626,17 @@ Exemplos:
 /deuses/zeus
 ```
 
-Passos de implementação:
+Implementado atualmente:
 
-- Adicionar React Router ou roteamento simples por hash;
-- Abrir modal automaticamente quando a URL tiver um `id`;
-- Atualizar URL ao abrir evento;
-- Permitir copiar link direto;
+- React Router com `createBrowserRouter`;
+- páginas de detalhe para evento, personagem e deus;
+- fallback para conteúdo inexistente;
+- carregamento lazy das páginas.
+
+Melhorias possíveis:
+
+- atualizar URL automaticamente ao abrir um evento pelo modal;
+- permitir copiar link direto por botão dedicado;
 - Manter fallback para evento inexistente.
 
 #### 9. Instalação como aplicativo
@@ -720,4 +778,4 @@ Melhorias técnicas futuras:
 
 - A versão HTML pura pode continuar preservada em `../jornada-historia`, quando essa pasta existir.
 - A versão React precisa de servidor local Vite; diferente da versão HTML, não deve ser aberta diretamente pelo arquivo `index.html`.
-- O `npm audit` apontava vulnerabilidades transitivas em Vite/esbuild. O projeto foi atualizado para Vite 8.1.5 e `@vitejs/plugin-react` 6.0.4. A última execução de `npm audit` retornou 0 vulnerabilidades.
+- O `package.json` atual usa Vite 7.3.6 e `@vitejs/plugin-react` 5.1.4.

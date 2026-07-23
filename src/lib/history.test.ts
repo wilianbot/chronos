@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { Acontecimento } from "../types";
+import { fontesEvento, fontesPersonagem } from "../services/historyCatalog";
+import type { Acontecimento, Personagem } from "../types";
 import { calcularProgressoPorPeriodo, filtrarEventos, ordenarEventos, validarEventosDuplicados } from "./history";
 
 function evento(parcial: Partial<Acontecimento>): Acontecimento {
@@ -92,5 +93,28 @@ describe("lógica histórica", () => {
 
     expect(progresso["Grécia Antiga"]).toEqual({ total: 2, feitos: 1, percentual: 50 });
     expect(progresso["Roma Antiga"]).toEqual({ total: 1, feitos: 0, percentual: 0 });
+  });
+
+  it("monta fallbacks para imagens de eventos e personagens sem caminho local inexistente", () => {
+    const eventoBase = evento({
+      imagem: "https://example.com/imagem-remota.jpg",
+      periodo: "Roma Antiga"
+    });
+    const personagem: Personagem = {
+      id: "socrates",
+      nome: "Sócrates",
+      periodo: "Grécia Clássica",
+      origem: "Atenas",
+      ocupacao: "filósofo",
+      feitos: "método socrático",
+      impacto: "filosofia ética",
+      curiosidade: "não escreveu livros",
+      imagem: "assets/images/partenon.jpg",
+      foto: "assets/images/personagens/socrates.jpg",
+      fotoRemota: "https://example.com/socrates.jpg"
+    };
+
+    expect(fontesEvento(eventoBase)).toEqual(["assets/images/coliseu.jpg", "/assets/images/mapa-placeholder.svg"]);
+    expect(fontesPersonagem(personagem)).toEqual(["assets/images/partenon.jpg", "/assets/images/mapa-placeholder.svg"]);
   });
 });

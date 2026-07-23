@@ -1,59 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import L from "leaflet";
 import { obterLocalEvento } from "../../data/geo";
 import { categoriaCores } from "../../services/historyCatalog";
 import { normalizar } from "../../lib/history";
 import type { Acontecimento } from "../../types";
+import { getAvailableMapProviders, tileLayerOptions } from "./mapProviders";
 
-const tileProviders = [
-  {
-    id: "esri-street",
-    nome: "Esri World Street Map",
-    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
-    options: {
-      attribution: "Tiles &copy; Esri, Garmin, FAO, NOAA, USGS, OpenStreetMap contributors and the GIS User Community",
-      maxZoom: 19
-    }
-  },
-  {
-    id: "esri-topo",
-    nome: "Esri Topographic",
-    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
-    options: {
-      attribution: "Tiles &copy; Esri, USGS, NOAA, OpenStreetMap contributors and the GIS User Community",
-      maxZoom: 19
-    }
-  },
-  {
-    id: "esri-imagery",
-    nome: "Esri World Imagery",
-    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    options: {
-      attribution: "Tiles &copy; Esri, Maxar, Earthstar Geographics and the GIS User Community",
-      maxZoom: 19
-    }
-  },
-  {
-    id: "osm",
-    nome: "OpenStreetMap",
-    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    options: {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      maxZoom: 19
-    }
-  },
-  {
-    id: "carto",
-    nome: "CARTO Voyager",
-    url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-    options: {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      maxZoom: 19,
-      subdomains: "abcd"
-    }
-  }
-];
+type ViteImportMeta = ImportMeta & {
+  env?: {
+    DEV?: boolean;
+  };
+};
+
+function viteEnv() {
+  return (import.meta as ViteImportMeta).env || {};
+}
 
 export function HistoryMap({
   eventos,
@@ -69,8 +30,9 @@ export function HistoryMap({
   const layerRef = useRef<L.LayerGroup | null>(null);
   const [mapReady, setMapReady] = useState(false);
   const [tileProviderIndex, setTileProviderIndex] = useState(0);
+  const [failedProviderIds, setFailedProviderIds] = useState<string[]>([]);
   const [tileError, setTileError] = useState(false);
-  const [remoteVisible, setRemoteVisible] = useState(false);
+  const availableProviders = useMemo(() => getAvailableMapProviders(), []);
 
   useEffect(() => {
     if (!mapElement.current || mapRef.current) return;
@@ -85,9 +47,28 @@ export function HistoryMap({
     mapRef.current = map;
     layerRef.current = layer;
     setMapReady(true);
-    window.setTimeout(() => map.invalidateSize(), 120);
+
+    const updateSize = () => {
+      window.requestAnimationFrame(() => {
+        map.invalidateSize({ pan: false, debounceMoveend: true });
+      });
+    };
+    updateSize();
+
+    const delayedUpdates = [80, 250, 600, 1200].map((delay) => window.setTimeout(updateSize, delay));
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(mapElement.current);
+    if (mapElement.current.parentElement) observer.observe(mapElement.current.parentElement);
+    window.addEventListener("resize", updateSize);
+    window.addEventListener("orientationchange", updateSize);
+    document.addEventListener("visibilitychange", updateSize);
 
     return () => {
+      observer.disconnect();
+      delayedUpdates.forEach((timer) => window.clearTimeout(timer));
+      window.removeEventListener("resize", updateSize);
+      window.removeEventListener("orientationchange", updateSize);
+      document.removeEventListener("visibilitychange", updateSize);
       map.remove();
       mapRef.current = null;
       layerRef.current = null;
@@ -99,18 +80,18 @@ export function HistoryMap({
     const map = mapRef.current;
     if (!mapReady || !map) return;
 
-    const provider = tileProviders[tileProviderIndex];
+    const provider = availableProviders[tileProviderIndex] || availableProviders[0];
+    if (!provider) return;
+
     let errors = 0;
     let loaded = false;
     let switched = false;
 
-    setRemoteVisible(false);
     setTileError(false);
 
-    const tiles = L.tileLayer(provider.url, provider.options)
+    const tiles = L.tileLayer(provider.url, tileLayerOptions(provider))
       .on("tileload", () => {
         loaded = true;
-        setRemoteVisible(true);
         setTileError(false);
       })
       .on("tileerror", () => {
@@ -118,23 +99,30 @@ export function HistoryMap({
         if (errors < 4 || loaded || switched) return;
 
         switched = true;
-        if (tileProviderIndex < tileProviders.length - 1) {
+        setFailedProviderIds((current) => Array.from(new Set([...current, provider.id])));
+        if (viteEnv().DEV) {
+          console.warn(`Provedor de mapa falhou: ${provider.name}`);
+        }
+
+        if (tileProviderIndex < availableProviders.length - 1) {
           setTileProviderIndex((index) => index + 1);
           return;
         }
 
         setTileError(true);
-        setRemoteVisible(false);
       })
       .addTo(map);
 
-    window.setTimeout(() => map.invalidateSize(), 120);
+    const delayedUpdates = [120, 360, 900].map((delay) =>
+      window.setTimeout(() => map.invalidateSize({ pan: false, debounceMoveend: true }), delay)
+    );
 
     return () => {
+      delayedUpdates.forEach((timer) => window.clearTimeout(timer));
       tiles.off();
       tiles.removeFrom(map);
     };
-  }, [mapReady, tileProviderIndex]);
+  }, [availableProviders, mapReady, tileProviderIndex]);
 
   useEffect(() => {
     const layer = layerRef.current;
@@ -166,12 +154,8 @@ export function HistoryMap({
   return (
     <div className="map-shell">
       <div className="map-visual">
-        {!remoteVisible && <FallbackWorldMap />}
-        <div
-          ref={mapElement}
-          className={`leaflet-map ${!remoteVisible ? "leaflet-map-fallback" : ""}`}
-          aria-label="Mapa interativo dos acontecimentos"
-        />
+        {tileError && <FallbackWorldMap />}
+        <div ref={mapElement} className="leaflet-map" aria-label="Mapa interativo dos acontecimentos" />
         {tileError && (
           <p className="map-tile-warning" role="status">
             A rede bloqueou os provedores remotos testados. Mantive a base local simplificada com marcadores
@@ -191,13 +175,16 @@ export function HistoryMap({
               setTileError(false);
             }}
           >
-            {tileProviders.map((provider, index) => (
+            {availableProviders.map((provider, index) => (
               <option key={provider.id} value={index}>
-                {provider.nome}
+                {provider.name}
               </option>
             ))}
           </select>
         </label>
+        {failedProviderIds.length > 0 && (
+          <small className="map-provider-status">Falhas tratadas: {failedProviderIds.join(", ")}</small>
+        )}
         <div className="legend">
           {Object.entries(categoriaCores)
             .slice(0, 10)
