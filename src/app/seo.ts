@@ -1,134 +1,158 @@
+import { personagens } from "../data/generated";
+import { eventosPorId } from "../services/historyCatalog";
+import { getDeityById } from "../services/mythologyService";
+
+type ViteImportMeta = ImportMeta & {
+  env?: {
+    VITE_SITE_URL?: string;
+  };
+};
+
 export type SeoRoute = {
   path: string;
   title: string;
   description: string;
 };
 
-export const siteName = "Jornada pela História";
-export const siteUrl = "https://jornada-pela-historia.vercel.app";
+export const siteName = "Chronos";
+export const siteUrl = ((import.meta as ViteImportMeta).env?.VITE_SITE_URL || "").replace(/\/$/, "");
 export const defaultDescription =
-  "Museu digital educacional com linha do tempo, mapas, personagens, mitologia, revisão e progresso local.";
+  "Chronos é uma plataforma educacional para estudar História através de linhas do tempo, mapas, personagens históricos, filosofia, mitologia, flashcards e jornadas de estudo.";
 
 export const seoRoutes: SeoRoute[] = [
-  { path: "/", title: "Jornada pela História", description: defaultDescription },
+  { path: "/", title: "Chronos | Uma jornada pela História", description: defaultDescription },
   {
     path: "/linha-do-tempo",
-    title: "Linha do tempo | Jornada pela História",
-    description: "Explore acontecimentos históricos organizados por períodos, causas e consequências."
+    title: "Linha do Tempo | Chronos",
+    description: "Explore acontecimentos históricos no Chronos, organizados por períodos, causas e consequências."
   },
   {
     path: "/periodos",
-    title: "Períodos históricos | Jornada pela História",
-    description: "Estude civilizações, eras e processos históricos com cards e progresso local."
+    title: "Períodos Históricos | Chronos",
+    description: "Estude civilizações, eras e processos históricos no Chronos com cards e progresso local."
   },
   {
     path: "/personagens",
-    title: "Personagens históricos | Jornada pela História",
-    description: "Conheça personagens importantes da Antiguidade ao século XX."
+    title: "Personagens Históricos | Chronos",
+    description: "Conheça personagens históricos importantes da Antiguidade ao século XX no Chronos."
   },
   {
     path: "/mitologia",
-    title: "Mitologia grega e romana | Jornada pela História",
-    description: "Catálogo de divindades gregas e romanas com fontes, imagens, relações e filtros."
+    title: "Mitologia Grega e Romana | Chronos",
+    description: "Explore mitologia grega e romana no Chronos com fontes, imagens, relações e filtros."
   },
   {
     path: "/mitologia/arvore",
-    title: "Árvore genealógica mitológica | Jornada pela História",
-    description: "Grafo genealógico de tradições mitológicas gregas e romanas com modo textual acessível."
+    title: "Árvore Genealógica Mitológica | Chronos",
+    description: "Grafo genealógico de tradições mitológicas gregas e romanas no Chronos, com modo textual acessível."
   },
   {
     path: "/mapas",
-    title: "Mapas históricos | Jornada pela História",
-    description: "Mapa interativo com acontecimentos, provedores OpenStreetMap, Esri e CARTO."
+    title: "Mapas Históricos | Chronos",
+    description: "Use mapas históricos no Chronos para localizar acontecimentos, cidades, batalhas e regiões."
   },
   {
     path: "/comparacoes",
-    title: "Comparações históricas | Jornada pela História",
-    description: "Compare períodos, sociedades, processos e transformações históricas."
+    title: "Comparador de Civilizações | Chronos",
+    description: "Compare civilizações, períodos, sociedades e transformações históricas no Chronos."
   },
   {
     path: "/jornadas",
-    title: "Jornadas guiadas | Jornada pela História",
-    description: "Percursos de estudo prontos para revisar temas históricos relacionados."
+    title: "Jornadas Guiadas | Chronos",
+    description: "Percursos de estudo do Chronos para revisar temas históricos relacionados."
   },
   {
     path: "/revisao",
-    title: "Revisão | Jornada pela História",
-    description: "Perguntas rápidas para revisar acontecimentos, conceitos e mitologia."
+    title: "Revisão | Chronos",
+    description: "Perguntas rápidas do Chronos para revisar acontecimentos, conceitos e mitologia."
   },
   {
     path: "/flashcards",
-    title: "Flashcards | Jornada pela História",
-    description: "Flashcards de história e mitologia com filtros de estudo."
+    title: "Flashcards | Chronos",
+    description: "Flashcards de História e mitologia no Chronos, com filtros de estudo."
   },
   {
     path: "/glossario",
-    title: "Glossário histórico | Jornada pela História",
-    description: "Conceitos essenciais para estudar história de forma contextualizada."
+    title: "Glossário Histórico | Chronos",
+    description: "Conceitos essenciais para estudar História de forma contextualizada no Chronos."
   },
   {
     path: "/favoritos",
-    title: "Favoritos | Jornada pela História",
-    description: "Itens favoritos salvos localmente neste navegador."
+    title: "Favoritos | Chronos",
+    description: "Itens favoritos do Chronos salvos localmente neste navegador."
   },
   {
     path: "/progresso",
-    title: "Progresso | Jornada pela História",
-    description: "Acompanhe eventos, divindades e revisões estudados neste navegador."
+    title: "Progresso | Chronos",
+    description: "Acompanhe no Chronos eventos, divindades e revisões estudados neste navegador."
   },
   {
     path: "/sobre",
-    title: "Sobre | Jornada pela História",
-    description: "Saiba como o projeto organiza conteúdos históricos, mitológicos e educacionais."
+    title: "Sobre | Chronos",
+    description: "Saiba como o Chronos organiza conteúdos históricos, mitológicos e educacionais."
   },
   {
     path: "/privacidade",
-    title: "Privacidade | Jornada pela História",
-    description: "Entenda quais dados ficam salvos localmente e como o projeto prepara anúncios futuros."
+    title: "Privacidade | Chronos",
+    description: "Entenda quais dados do Chronos ficam salvos localmente no navegador."
   },
   {
     path: "/termos",
-    title: "Termos de uso | Jornada pela História",
-    description: "Condições gerais para uso educacional do projeto Jornada pela História."
+    title: "Termos de Uso | Chronos",
+    description: "Condições gerais para uso educacional do Chronos."
   },
   {
     path: "/contato",
-    title: "Contato | Jornada pela História",
-    description: "Informações para contato, correções e sugestões sobre o conteúdo educacional."
+    title: "Contato | Chronos",
+    description: "Informações de contato da WR Labs para correções e sugestões sobre o Chronos."
   }
 ];
+
+function itemId(pathname: string) {
+  const segments = pathname.split("/").filter(Boolean);
+  return decodeURIComponent(segments[segments.length - 1] || "");
+}
 
 export function getSeoForPath(pathname: string): SeoRoute {
   const exact = seoRoutes.find((route) => route.path === pathname);
   if (exact) return exact;
 
   if (pathname.startsWith("/deuses/")) {
+    const deity = getDeityById(itemId(pathname));
     return {
       path: pathname,
-      title: "Divindade | Jornada pela História",
-      description: "Página individual de divindade com história, símbolos, relações e fontes."
+      title: `${deity?.name || "Divindade"} | Chronos`,
+      description: deity
+        ? `Estude ${deity.name} no Chronos, com história, símbolos, relações e fontes.`
+        : "Página individual de divindade no Chronos, com história, símbolos, relações e fontes."
     };
   }
 
   if (pathname.startsWith("/eventos/")) {
+    const evento = eventosPorId.get(itemId(pathname));
     return {
       path: pathname,
-      title: "Acontecimento histórico | Jornada pela História",
-      description: "Detalhes de acontecimento histórico com contexto, impacto e relações."
+      title: `${evento?.titulo || "Acontecimento histórico"} | Chronos`,
+      description: evento
+        ? `${evento.resumo} Estude contexto, impacto e relações no Chronos.`
+        : "Detalhes de acontecimento histórico no Chronos, com contexto, impacto e relações."
     };
   }
 
   if (pathname.startsWith("/personagens/")) {
+    const personagem = personagens.find((item) => item.id === itemId(pathname));
     return {
       path: pathname,
-      title: "Personagem histórico | Jornada pela História",
-      description: "Detalhes de personagem histórico com contexto e relações."
+      title: `${personagem?.nome || "Personagem histórico"} | Chronos`,
+      description: personagem
+        ? `Estude ${personagem.nome} no Chronos, com contexto histórico e relações.`
+        : "Detalhes de personagem histórico no Chronos, com contexto e relações."
     };
   }
 
   return {
     path: pathname,
-    title: "Página não encontrada | Jornada pela História",
+    title: "Página não encontrada | Chronos",
     description: defaultDescription
   };
 }

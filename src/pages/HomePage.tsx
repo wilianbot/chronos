@@ -5,6 +5,7 @@ import { acontecimentos, personagens } from "../data/generated";
 import { jornadasGuiadas } from "../data/studyTools";
 import { useAppContext } from "../hooks/useAppContext";
 import { eventosOrdenados } from "../services/historyCatalog";
+import { Logo } from "../components/brand/Logo";
 import { Stat } from "../components/common/Ui";
 
 export function HomePage() {
@@ -21,11 +22,13 @@ export function HomePage() {
     <>
       <section className="hero dashboard-hero">
         <div className="hero-copy">
-          <span className="eyebrow">Museu histórico digital</span>
-          <h1>Jornada pela História</h1>
+          <span className="eyebrow">Plataforma educacional de História</span>
+          <h1>
+            <Logo />
+          </h1>
           <p>
-            Explore a Antiguidade, Grécia, Roma, Idade Média, modernidade e guerras mundiais em módulos separados,
-            preservando favoritos, progresso e revisão.
+            Explore o passado. Entenda o presente. Estude Antiguidade, Grécia, Roma, Idade Média, modernidade e
+            guerras mundiais em módulos visuais, com favoritos, progresso local e revisão.
           </p>
           <div className="hero-actions">
             <Link className="button primary" to="/linha-do-tempo">

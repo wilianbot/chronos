@@ -27,7 +27,7 @@ export function useDocumentMeta() {
 
   useEffect(() => {
     const seo = getSeoForPath(location.pathname);
-    const canonical = `${siteUrl}${seo.path}`;
+    const canonical = `${siteUrl || window.location.origin}${seo.path}`;
 
     document.title = seo.title;
     upsertCanonical(canonical);

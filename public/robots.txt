@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jornada-pela-historia.vercel.app/sitemap.xml
+# Defina o domínio oficial antes da publicação.
+# O app usa VITE_SITE_URL para canonical e Open Graph em runtime.
+Sitemap: /sitemap.xml

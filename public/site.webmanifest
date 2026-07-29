@@ -1,10 +1,10 @@
 {
-  "name": "Jornada pela História",
-  "short_name": "Jornada História",
-  "description": "Museu digital educacional com linha do tempo, mapas, personagens, mitologia e revisão.",
+  "name": "Chronos",
+  "short_name": "Chronos",
+  "description": "Chronos é uma plataforma educacional para estudar História com linha do tempo, mapas, personagens, mitologia, flashcards e revisão.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#15181c",
-  "theme_color": "#15181c",
+  "theme_color": "#12161b",
   "lang": "pt-BR"
 }

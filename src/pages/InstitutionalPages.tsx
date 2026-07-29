@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { BrandHeader } from "../components/brand/BrandHeader";
 
 function InstitutionalShell({ eyebrow, title, children }: { eyebrow: string; title: string; children: ReactNode }) {
   return (
@@ -15,13 +16,17 @@ function InstitutionalShell({ eyebrow, title, children }: { eyebrow: string; tit
 
 export function AboutPage() {
   return (
-    <InstitutionalShell eyebrow="Projeto" title="Sobre a Jornada pela História">
+    <InstitutionalShell eyebrow="Projeto" title="Sobre o Chronos">
+      <BrandHeader
+        title="Uma jornada pela História"
+        text="Chronos foi criado para tornar o estudo da História mais visual, organizado e interativo."
+      />
       <article className="mini-card">
-        <h3>Finalidade educacional</h3>
+        <h3>Experiência de aprendizado</h3>
         <p>
-          A aplicação organiza acontecimentos, personagens, mapas, mitologia e revisão em uma experiência de estudo
-          interativa. O conteúdo mitológico é apresentado como tradição religiosa e literária antiga, não como história
-          documentada.
+          Chronos conecta acontecimentos históricos, personagens, civilizações, filosofia e mitologia em uma experiência
+          moderna de aprendizado. O conteúdo mitológico é apresentado como tradição religiosa e literária antiga, não
+          como história documentada.
         </p>
       </article>
       <article className="mini-card">
@@ -32,10 +37,10 @@ export function AboutPage() {
         </p>
       </article>
       <article className="mini-card">
-        <h3>Recursos</h3>
+        <h3>WR Labs</h3>
         <p>
-          O projeto inclui linha do tempo, catálogo de personagens, mapas, árvore genealógica mitológica, flashcards,
-          favoritos e progresso salvo localmente no navegador.
+          O projeto é desenvolvido pela WR Labs. Para sugestões, correções ou contato institucional, escreva para{" "}
+          <a href="mailto:wrlabs.apps@gmail.com">wrlabs.apps@gmail.com</a>.
         </p>
       </article>
     </InstitutionalShell>
@@ -60,10 +65,10 @@ export function PrivacyPage() {
         </p>
       </article>
       <article className="mini-card">
-        <h3>Anúncios futuros</h3>
+        <h3>Chronos e WR Labs</h3>
         <p>
-          O projeto está preparado para anúncios no futuro, mas nenhum rastreador publicitário é ativado sem
-          configuração explícita de provedor e atualização desta página.
+          Chronos é desenvolvido pela WR Labs. Contato:{" "}
+          <a href="mailto:wrlabs.apps@gmail.com">wrlabs.apps@gmail.com</a>.
         </p>
       </article>
     </InstitutionalShell>
@@ -76,7 +81,7 @@ export function TermsPage() {
       <article className="mini-card">
         <h3>Uso educacional</h3>
         <p>
-          O conteúdo é destinado a estudo, revisão e exploração cultural. Ele não substitui livros didáticos, aulas,
+          Chronos é destinado a estudo, revisão e exploração cultural. Ele não substitui livros didáticos, aulas,
           pesquisa acadêmica ou consulta às fontes primárias.
         </p>
       </article>
@@ -100,13 +105,20 @@ export function TermsPage() {
 
 export function ContactPage() {
   return (
-    <InstitutionalShell eyebrow="Contato" title="Sugestões e correções">
+    <InstitutionalShell eyebrow="Contato" title="WR Labs">
       <article className="mini-card">
-        <h3>Como contribuir</h3>
+        <h3>Contato</h3>
         <p>
-          Envie correções com o trecho afetado, a fonte sugerida e, quando envolver imagem, a licença e a página
-          original do acervo.
+          Para sugestões, correções e contato sobre o Chronos, fale com a WR Labs pelo e-mail abaixo.
         </p>
+        <p>
+          <strong>WR Labs</strong>
+          <br />
+          <a href="mailto:wrlabs.apps@gmail.com">wrlabs.apps@gmail.com</a>
+        </p>
+        <a className="button primary compact" href="mailto:wrlabs.apps@gmail.com">
+          Enviar e-mail
+        </a>
       </article>
       <article className="mini-card">
         <h3>Rotas principais</h3>

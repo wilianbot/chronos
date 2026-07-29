@@ -4,6 +4,7 @@ import { ArrowUp, Landmark, Menu, Moon, PanelLeftClose, PanelLeftOpen, Sun, X } 
 import { useAppContext } from "../../hooks/useAppContext";
 import { useDocumentMeta } from "../../hooks/useDocumentMeta";
 import { appRoutes } from "../../app/routes";
+import { Logo } from "../brand/Logo";
 import { EventModal } from "../timeline/EventModal";
 
 export function AppLayout() {
@@ -32,7 +33,7 @@ export function AppLayout() {
       <aside className="sidebar" aria-label="Navegação principal">
         <Link className="brand sidebar-brand" to="/">
           <Landmark size={22} />
-          <span>Jornada pela História</span>
+          <Logo compact />
         </Link>
         <button
           className="button secondary compact sidebar-toggle"
@@ -66,8 +67,11 @@ export function AppLayout() {
           <Outlet />
         </main>
         <footer className="app-footer">
-          <span>Jornada pela História</span>
-          <span>Museu digital educacional com progresso salvo localmente.</span>
+          <div>
+            <strong>© 2026 Chronos</strong>
+            <span>Uma plataforma educacional desenvolvida pela WR Labs.</span>
+            <a href="mailto:wrlabs.apps@gmail.com">wrlabs.apps@gmail.com</a>
+          </div>
           <nav aria-label="Links institucionais">
             <Link to="/sobre">Sobre</Link>
             <Link to="/privacidade">Privacidade</Link>

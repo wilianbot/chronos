@@ -24,7 +24,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       return (
         <main className="state-screen error-state" role="alert">
           <span className="eyebrow">Erro inesperado</span>
-          <h1>Algo impediu a exibição do museu digital</h1>
+          <h1>Algo impediu a exibição do Chronos</h1>
           <p>{this.state.erro.message}</p>
           <button className="button primary" onClick={() => location.reload()}>
             Recarregar aplicação

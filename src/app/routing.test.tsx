@@ -23,7 +23,7 @@ describe("rotas e navegação", () => {
     renderAt("/");
 
     expect(
-      await screen.findByRole("heading", { name: /Jornada pela História/i }, lazyRouteTimeout)
+      await screen.findByRole("heading", { name: /Chronos/i }, lazyRouteTimeout)
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Começar a jornada/i })).toHaveAttribute("href", "/linha-do-tempo");
   });
@@ -32,7 +32,7 @@ describe("rotas e navegação", () => {
     const user = userEvent.setup();
     renderAt("/");
 
-    await screen.findByRole("heading", { name: /Jornada pela História/i }, lazyRouteTimeout);
+    await screen.findByRole("heading", { name: /Chronos/i }, lazyRouteTimeout);
     const menu = screen.getByRole("navigation", { name: /Módulos principais/i });
     await user.click(within(menu).getByRole("link", { name: /Personagens/i }));
 
@@ -75,7 +75,7 @@ describe("rotas e navegação", () => {
     const user = userEvent.setup();
     renderAt("/");
 
-    await screen.findByRole("heading", { name: /Jornada pela História/i }, lazyRouteTimeout);
+    await screen.findByRole("heading", { name: /Chronos/i }, lazyRouteTimeout);
     await user.click(screen.getByRole("button", { name: /Alternar tema/i }));
 
     await waitFor(() => expect(document.documentElement.dataset.theme).toBe("claro"));
@@ -145,7 +145,7 @@ describe("rotas e navegação", () => {
     const user = userEvent.setup();
     renderAt("/");
 
-    await screen.findByRole("heading", { name: /Jornada pela História/i }, lazyRouteTimeout);
+    await screen.findByRole("heading", { name: /Chronos/i }, lazyRouteTimeout);
     await user.click(screen.getByRole("button", { name: /Abrir menu/i }));
 
     expect(screen.getByLabelText(/Menu móvel/i)).toBeInTheDocument();

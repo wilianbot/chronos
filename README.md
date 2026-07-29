@@ -1,6 +1,89 @@
-# Jornada pela História - React + TypeScript
+# Chronos
 
-Versão React + TypeScript do projeto educacional **Jornada pela História**. A aplicação organiza uma linha do tempo interativa da Antiguidade até o fim da Segunda Guerra Mundial, com filtros, mapa real, personagens, catálogo de mitologia grega e romana, comparador de civilizações, flashcards, revisão rápida, favoritos e progresso salvo localmente.
+Uma jornada pela História.
+
+## Sobre
+
+Chronos é uma plataforma educacional desenvolvida pela WR Labs para facilitar o aprendizado de História por meio de linhas do tempo, mapas, jornadas de estudo, personagens históricos, filosofia, mitologia, flashcards e revisão.
+
+Contato: wrlabs.apps@gmail.com
+
+Versão React + TypeScript do projeto educacional **Chronos**. A aplicação organiza uma linha do tempo interativa da Antiguidade até o fim da Segunda Guerra Mundial, com filtros, mapa real, personagens, catálogo de mitologia grega e romana, comparador de civilizações, flashcards, revisão rápida, favoritos e progresso salvo localmente.
+
+## Branding e publicação
+
+- Nome público: **Chronos**.
+- Subtítulo: **Uma jornada pela História**.
+- Desenvolvido por: **WR Labs**.
+- Contato: **wrlabs.apps@gmail.com**.
+- Domínio: não há domínio oficial definido neste repositório. Configure `VITE_SITE_URL` no ambiente de publicação para preencher URLs canônicas e Open Graph em runtime.
+- Favicon: a estrutura está preparada para receber futuramente um ícone relacionado a tempo, como relógio, ampulheta ou símbolo cronológico. Nenhuma imagem foi gerada nesta etapa.
+
+## Estado atual do projeto
+
+O Chronos está atualmente como uma aplicação frontend estática em React, TypeScript e Vite. A navegação é feita por React Router, os dados ficam no próprio projeto e a persistência do usuário usa `localStorage`.
+
+Não existe backend, banco de dados, autenticação, área administrativa ou login. Essa decisão mantém a aplicação simples de publicar e compatível com hospedagens estáticas, como Vercel, Netlify, Cloudflare Pages ou GitHub Pages com configuração adequada de SPA.
+
+Hoje o projeto já possui:
+
+- identidade pública como **Chronos**;
+- layout global com sidebar, topbar, footer institucional e tema claro/escuro;
+- logo tipográfico reutilizável em `src/components/brand/Logo.tsx`;
+- cabeçalho institucional reutilizável em `src/components/brand/BrandHeader.tsx`;
+- páginas institucionais de Sobre, Privacidade, Termos e Contato;
+- SEO por rota, incluindo rotas dinâmicas de eventos, personagens e deuses;
+- suporte a `VITE_SITE_URL` para URLs canônicas em produção;
+- linha do tempo com filtros, favoritos, progresso e modal de detalhes;
+- páginas de períodos, personagens, mitologia, mapas, comparações, jornadas, revisão, flashcards, glossário, favoritos e progresso;
+- catálogo de mitologia grega e romana com imagens locais parciais e fallback;
+- árvore genealógica mitológica interativa;
+- mapa histórico com Leaflet e provedores OpenStreetMap, Esri e CARTO;
+- testes automatizados, lint e build TypeScript funcionando.
+
+Validação mais recente:
+
+```bash
+npm run build
+npm run lint
+npm run test
+```
+
+Resultado: build aprovado, lint aprovado e 66 testes passando.
+
+## O que falta implementar
+
+Antes da publicação oficial, ainda falta:
+
+- definir o domínio oficial;
+- configurar `VITE_SITE_URL` no ambiente de produção;
+- atualizar `public/sitemap.xml` com URLs absolutas do domínio final;
+- atualizar `public/robots.txt` com o sitemap absoluto do domínio final;
+- criar e adicionar favicon real, preferencialmente com relógio, ampulheta ou símbolo relacionado ao tempo;
+- criar ícones completos de PWA quando a instalação como aplicativo for priorizada;
+- revisar textos legais de Privacidade e Termos antes de uso público amplo;
+- validar visualmente as principais páginas em desktop e mobile no domínio final.
+
+Funcionalidades de produto que ainda podem evoluir:
+
+- salvar progresso por jornada guiada;
+- adicionar desempenho individual dos flashcards;
+- implementar revisão espaçada por data;
+- criar linha do tempo comparativa entre regiões/civilizações;
+- criar editor de acontecimentos ou fluxo de importação de dados;
+- permitir copiar link direto de eventos abertos no modal;
+- melhorar páginas individuais de eventos e personagens com layout mais completo;
+- adicionar modo offline com service worker;
+- exibir aviso de offline quando mapas ou imagens remotas não carregarem.
+
+Conteúdo e acervo que ainda faltam expandir:
+
+- completar imagens de mitologia que falharam no download;
+- enriquecer divindades com fontes primárias específicas;
+- adicionar novas mitologias usando a estrutura já preparada;
+- ampliar o recorte histórico para Ásia, África, Américas e mundo islâmico;
+- dividir temas amplos em eventos menores e mais específicos;
+- revisar periodicamente fontes, créditos e licenças de imagem.
 
 ## Tecnologias
 

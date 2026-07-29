@@ -1,16 +1,18 @@
 :root {
   color-scheme: dark;
-  --bg: #15181c;
-  --bg-2: #1f242b;
-  --panel: #242832;
-  --panel-2: #2b303b;
+  --bg: #12161b;
+  --bg-2: #1a2027;
+  --panel: #222832;
+  --panel-2: #2a313b;
   --text: #f5ead2;
   --muted: #c9bea6;
-  --line: rgba(214, 177, 96, 0.26);
+  --line: rgba(215, 177, 96, 0.24);
   --gold: #d7ad54;
-  --gold-2: #f1d486;
-  --wine: #743242;
-  --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  --gold-2: #f4d98d;
+  --wine: #813c50;
+  --teal: #75b8a6;
+  --ink: #101317;
+  --shadow: 0 22px 54px rgba(0, 0, 0, 0.25);
   --radius: 8px;
   font-family: Inter, system-ui, sans-serif;
 }
@@ -42,8 +44,9 @@ body {
   min-width: 320px;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at 12% 8%, rgba(215, 173, 84, 0.12), transparent 28rem),
-    linear-gradient(135deg, rgba(116, 50, 66, 0.1), transparent 32rem),
+    radial-gradient(circle at 12% 8%, rgba(215, 173, 84, 0.1), transparent 28rem),
+    linear-gradient(135deg, rgba(117, 184, 166, 0.08), transparent 28rem),
+    linear-gradient(155deg, rgba(129, 60, 80, 0.12), transparent 34rem),
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 7px), var(--bg);
   color: var(--text);
   font-family: Inter, system-ui, sans-serif;
@@ -123,12 +126,14 @@ select:focus-visible {
   gap: 0.9rem;
   padding: 1rem;
   border-right: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg-2), transparent 6%);
+  background:
+    linear-gradient(180deg, rgba(215, 173, 84, 0.055), transparent 34rem),
+    color-mix(in srgb, var(--bg-2), transparent 4%);
   overflow: auto;
 }
 
 .sidebar-brand {
-  min-height: 46px;
+  min-height: 58px;
 }
 
 .sidebar-toggle {
@@ -152,6 +157,11 @@ select:focus-visible {
   color: var(--muted);
   text-decoration: none;
   font-weight: 800;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
 }
 
 .side-nav a:hover,
@@ -159,6 +169,10 @@ select:focus-visible {
   border-color: var(--line);
   background: rgba(255, 255, 255, 0.045);
   color: var(--gold-2);
+}
+
+.side-nav a:hover {
+  transform: translateX(2px);
 }
 
 .side-nav a i {
@@ -236,11 +250,27 @@ select:focus-visible {
 .app-footer {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem clamp(1rem, 4vw, 3rem);
+  align-items: start;
+  gap: 1.25rem;
+  padding: 1.15rem clamp(1rem, 4vw, 3rem);
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.app-footer > div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.app-footer strong {
+  color: var(--text);
+}
+
+.app-footer a {
+  color: var(--gold-2);
+  text-decoration-color: rgba(244, 217, 141, 0.45);
+  text-underline-offset: 3px;
 }
 
 .mobile-drawer-backdrop {
@@ -355,7 +385,7 @@ select:focus-visible {
   align-items: center;
   padding: 0.85rem clamp(1rem, 4vw, 3rem);
   border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg-2), transparent 8%);
+  background: color-mix(in srgb, var(--bg-2), transparent 5%);
   backdrop-filter: blur(18px);
 }
 
@@ -371,6 +401,70 @@ select:focus-visible {
   align-items: center;
   font-family: Cinzel, serif;
   font-weight: 800;
+}
+
+.logo {
+  display: inline-grid;
+  gap: 0.18rem;
+  line-height: 1;
+}
+
+.logo-word {
+  font-family: Cinzel, Georgia, serif;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.logo-tagline {
+  color: var(--gold-2);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.logo-compact {
+  gap: 0;
+}
+
+.logo-compact .logo-word {
+  font-size: 1rem;
+}
+
+.brand-header {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.45fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: center;
+  grid-column: 1 / -1;
+  padding: clamp(1.15rem, 3vw, 1.6rem);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(215, 173, 84, 0.12), transparent),
+    linear-gradient(135deg, transparent, rgba(117, 184, 166, 0.1)),
+    var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.brand-header .logo-word {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+}
+
+.brand-header-copy {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.brand-header-copy h2 {
+  font-size: clamp(1.55rem, 3.2vw, 2.6rem);
+}
+
+.brand-header-copy p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
 }
 
 .topbar nav {
@@ -408,6 +502,7 @@ select:focus-visible {
   font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 h1,
@@ -425,6 +520,15 @@ h1 {
   margin-top: 0.75rem;
   font-size: clamp(3.2rem, 9vw, 7rem);
   max-width: 980px;
+}
+
+h1 .logo-word {
+  font-size: inherit;
+}
+
+h1 .logo-tagline {
+  margin-top: 0.35rem;
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
 }
 h2 {
   font-size: clamp(2rem, 4vw, 3.6rem);
@@ -484,9 +588,10 @@ p {
 }
 
 .button.primary {
-  background: linear-gradient(135deg, var(--gold), #98672e);
+  background: linear-gradient(135deg, var(--gold-2), var(--gold) 52%, #9b6830);
   color: #17120b;
   border-color: transparent;
+  box-shadow: 0 12px 28px rgba(215, 173, 84, 0.18);
 }
 
 .button.secondary {
@@ -507,6 +612,10 @@ p {
 .icon-button:hover {
   transform: translateY(-1px);
   border-color: var(--gold);
+}
+
+.button.primary:hover {
+  box-shadow: 0 16px 34px rgba(215, 173, 84, 0.24);
 }
 
 .button:disabled {
@@ -644,6 +753,22 @@ p {
   border-radius: 8px;
   background: var(--panel);
   box-shadow: var(--shadow);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.stat:hover,
+.mini-card:hover,
+.compare-card:hover,
+.review-card:hover,
+.person-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--gold), var(--line) 45%);
+  background: color-mix(in srgb, var(--panel), var(--gold) 4%);
+  box-shadow: 0 26px 64px rgba(0, 0, 0, 0.3);
 }
 
 .stat {
@@ -2164,6 +2289,10 @@ p {
     padding-top: 2rem;
   }
 
+  .brand-header {
+    grid-template-columns: 1fr;
+  }
+
   .hero-art,
   .hero-art img {
     min-height: 340px;
@@ -2209,6 +2338,14 @@ p {
   .hero-actions {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .app-footer {
+    display: grid;
+  }
+
+  .app-footer nav {
+    justify-content: flex-start;
   }
   .card-actions .icon-button {
     width: 100%;
@@ -2968,6 +3105,12 @@ p {
 .app-footer nav a:hover,
 .app-footer nav a:focus-visible {
   color: var(--gold-2);
+}
+
+.institutional-page a {
+  color: var(--gold-2);
+  text-decoration-color: rgba(244, 217, 141, 0.45);
+  text-underline-offset: 3px;
 }
 
 .institutional-grid {

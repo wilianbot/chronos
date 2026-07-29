@@ -8,10 +8,24 @@ describe("SEO routes", () => {
     );
   });
 
-  it("usa metadata generica para rotas dinamicas de deuses", () => {
+  it("usa metadata especifica para rotas dinamicas de deuses", () => {
     const seo = getSeoForPath("/deuses/zeus");
 
-    expect(seo.title).toContain("Divindade");
-    expect(seo.description).toContain("Página individual");
+    expect(seo.title).toBe("Zeus | Chronos");
+    expect(seo.description).toContain("Chronos");
+  });
+
+  it("usa metadata especifica para rotas dinamicas de eventos", () => {
+    const seo = getSeoForPath("/eventos/maratona");
+
+    expect(seo.title).toBe("Batalha de Maratona | Chronos");
+    expect(seo.description).toContain("Chronos");
+  });
+
+  it("usa metadata especifica para rotas dinamicas de personagens", () => {
+    const seo = getSeoForPath("/personagens/alexandre-o-grande");
+
+    expect(seo.title).toBe("Alexandre, o Grande | Chronos");
+    expect(seo.description).toContain("Chronos");
   });
 });
