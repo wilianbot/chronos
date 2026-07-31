@@ -29,6 +29,9 @@ describe("CSS responsivo", () => {
 
   it("define altura responsiva para o mapa e modal de tela cheia no celular", () => {
     expect(css).toMatch(/\.map-visual\s*\{[\s\S]*min-height:\s*420px;[\s\S]*height:\s*min\(65vh,\s*720px\);/);
+    expect(css).toMatch(/\.map-shell\s*\{[\s\S]*max-width:\s*100%;[\s\S]*overflow:\s*clip;/);
+    expect(css).toMatch(/\.map-visual\s*\{[\s\S]*contain:\s*layout paint;[\s\S]*isolation:\s*isolate;/);
+    expect(css).toMatch(/\.leaflet-container \.leaflet-control-attribution\s*\{[\s\S]*text-overflow:\s*ellipsis;/);
     expect(css).toMatch(/@media \(max-width:\s*520px\)[\s\S]*\.modal\s*\{[\s\S]*max-height:\s*100dvh;/);
     expect(css).toMatch(/@media \(max-width:\s*520px\)[\s\S]*\.map-visual\s*\{[\s\S]*height:\s*50vh;/);
   });
