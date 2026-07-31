@@ -250,4 +250,19 @@ describe("mythologyTreeService", () => {
     expect(complete.isComplete).toBe(true);
     expect(complete.nodes.length).toBeGreaterThan(family.nodes.length);
   });
+  it("inclui todos os filhos cadastrados e somente ligacoes com pontas visiveis", () => {
+    const graph = buildMythologyTreeGraph({
+      ...baseFilters,
+      focusId: "zeus",
+      mode: "near-family",
+      depth: "1"
+    });
+    const nodeIds = new Set(graph.nodes.map((node) => node.id));
+    const children = getChildren("zeus", "grega").map((entity) => entity.id);
+
+    expect(children.length).toBeGreaterThan(8);
+    expect(ids(graph.nodes)).toEqual(expect.arrayContaining(children));
+    expect(graph.edges.every((edge) => nodeIds.has(edge.source) && nodeIds.has(edge.target))).toBe(true);
+  });
+
 });

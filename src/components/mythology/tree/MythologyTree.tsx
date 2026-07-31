@@ -8,7 +8,7 @@ import { MythologyEntityPanel } from "./MythologyEntityPanel";
 import { MythologyRelationPanel } from "./MythologyRelationPanel";
 import { MythologyTraditionSelector } from "./MythologyTraditionSelector";
 import { MythologyTreeBreadcrumbs } from "./MythologyTreeBreadcrumbs";
-import { MythologyTreeCanvas } from "./MythologyTreeCanvas";
+import { SimpleMythologyTree } from "./SimpleMythologyTree";
 import { MythologyTreeEmptyState } from "./MythologyTreeEmptyState";
 import { MythologyTreeFilters } from "./MythologyTreeFilters";
 import { MythologyTreeLegend } from "./MythologyTreeLegend";
@@ -132,14 +132,12 @@ export function MythologyTree() {
             </p>
           ) : null}
           {graph.nodes.length ? (
-            <MythologyTreeCanvas
+            <SimpleMythologyTree
               nodes={graph.nodes}
               edges={graph.edges}
               selectedId={selectedEntity?.id}
               favorites={favoritos}
               studied={estudados}
-              showMinimap={filters.showMinimap}
-              completeTree={graph.isComplete}
               onSelect={selectEntity}
             />
           ) : (

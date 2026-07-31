@@ -17,7 +17,7 @@ export function relationEdgeStyle(relation: MythologicalRelation): CSSProperties
     return { stroke: "#62d2ff", strokeWidth: 3.4, strokeDasharray: "8 8" };
   }
   if (relation.type === "partner" || relation.type === "spouse") {
-    return { stroke: "#ffe08a", strokeWidth: 5.2 };
+    return { stroke: "#b985d6", strokeWidth: 3.2, strokeDasharray: "8 6" };
   }
   if (relation.alternative || relation.disputed) {
     return { stroke: "#f4b860", strokeWidth: 3.1, strokeDasharray: "5 7" };
@@ -25,7 +25,7 @@ export function relationEdgeStyle(relation: MythologicalRelation): CSSProperties
   if (relation.type === "rival" || relation.type === "companion") {
     return { stroke: "#c9bea6", strokeWidth: 2.2, strokeDasharray: "2 8" };
   }
-  return { stroke: "#f1d486", strokeWidth: 3.4 };
+  return { stroke: "#55b982", strokeWidth: 3.2 };
 }
 
 export function relationClassName(relation: MythologicalRelation) {

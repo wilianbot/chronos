@@ -463,7 +463,8 @@ function collectFocusedFamily(filters: MythologyTreeFilters, relations: Mytholog
   const focus = mythologicalEntityMap.get(focusId);
   if (!focus) return { selected, levels, hints, focusId };
 
-  const partnerId = filters.partnerId || defaultPartnerForFocus(focusId);
+  const partnerId =
+    filters.partnerId || (filters.mode === "family" ? defaultPartnerForFocus(focusId) : undefined);
   const partner = partnerId ? mythologicalEntityMap.get(partnerId) : undefined;
   const maxDepth = depthNumber(filters.mode === "near-family" && filters.depth === "1" ? "2" : filters.depth);
 
@@ -484,11 +485,10 @@ function collectFocusedFamily(filters: MythologyTreeFilters, relations: Mytholog
     const children = getPairChildren(focus.id, partner.id, filters.mythology, relations);
     children.forEach((child) => addEntity(selected, levels, hints, child.id, 1, "Filho(a)"));
   } else {
-    const partners = getPartners(focus.id, filters.mythology, relations).slice(0, focus.id === "zeus" ? 4 : 8);
+    const partners = getPartners(focus.id, filters.mythology, relations);
     partners.forEach((item) => addEntity(selected, levels, hints, item.id, 0, "Parceiro"));
-    getChildren(focus.id, filters.mythology, relations)
-      .slice(0, focus.id === "zeus" ? 8 : 16)
-      .forEach((child) => addEntity(selected, levels, hints, child.id, 1, "Filho(a)"));
+    getChildren(focus.id, filters.mythology, relations).forEach((child) =>
+      addEntity(selected, levels, hints, child.id, 1, "Filho(a)"));
   }
 
   getParents(focus.id, filters.mythology, relations).forEach((parent) =>
