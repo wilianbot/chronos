@@ -13,8 +13,7 @@ describe("provedores do mapa histórico", () => {
   it("mantém apenas provedores disponíveis e com atribuição", () => {
     const available = getAvailableMapProviders("");
 
-    expect(available.length).toBeGreaterThanOrEqual(2);
-    expect(available.map((provider) => provider.id)).toContain("esri-street");
+    expect(available.map((provider) => provider.id)).toEqual(["osm"]);
     expect(available.every((provider) => provider.attribution.length > 0)).toBe(true);
   });
 });

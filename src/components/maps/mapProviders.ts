@@ -61,7 +61,7 @@ function mapApiKey() {
 }
 
 export function getAvailableMapProviders(apiKey = mapApiKey()) {
-  return tileProviders.filter((provider) => !provider.requiresApiKey || apiKey);
+  return tileProviders.filter((provider) => provider.id === "osm" && (!provider.requiresApiKey || apiKey));
 }
 
 export function tileLayerOptions(provider: MapProvider): L.TileLayerOptions {

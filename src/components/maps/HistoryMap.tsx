@@ -166,22 +166,10 @@ export function HistoryMap({
       <div className="map-side">
         <strong>{eventos.length} marcadores</strong>
         <p>Use zoom, arraste o mapa e clique nos pontos para abrir detalhes do acontecimento.</p>
-        <label className="map-provider-select">
+        <div className="map-provider-select">
           <span>Mapa base</span>
-          <select
-            value={tileProviderIndex}
-            onChange={(event) => {
-              setTileProviderIndex(Number(event.target.value));
-              setTileError(false);
-            }}
-          >
-            {availableProviders.map((provider, index) => (
-              <option key={provider.id} value={index}>
-                {provider.name}
-              </option>
-            ))}
-          </select>
-        </label>
+          <strong>OpenStreetMap</strong>
+        </div>
         {failedProviderIds.length > 0 && (
           <small className="map-provider-status">Falhas tratadas: {failedProviderIds.join(", ")}</small>
         )}
