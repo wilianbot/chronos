@@ -80,7 +80,7 @@ export const defaultTreeFilters: MythologyTreeFilters = {
   category: "todas",
   tradition: "todas",
   mode: "family",
-  depth: "1",
+  depth: "all",
   includeAlternative: true,
   includeCorrespondences: false,
   includeNarrative: false,
@@ -274,7 +274,7 @@ export const treeFamilyPresets = [
     focusId: "cronos",
     partnerId: "reia",
     mode: "family" as const,
-    depth: "1" as const
+    depth: "all" as const
   },
   {
     id: "zeus",
@@ -506,35 +506,27 @@ function collectFocusedFamily(filters: MythologyTreeFilters, relations: Mytholog
   }
 
   if (maxDepth >= 2) {
-    [...selected].forEach((id) => {
-      const level = levels.get(id) || 0;
-      if (level === -1) {
-        getParents(id, filters.mythology, relations).forEach((parent) =>
-          addEntity(selected, levels, hints, parent.id, -2, "Avô/avó")
-        );
-      }
-      if (level === 1) {
-        getChildren(id, filters.mythology, relations).forEach((child) =>
-          addEntity(selected, levels, hints, child.id, 2, "Neto(a)")
-        );
-      }
-    });
-  }
+    const queue = [...selected]
+      .filter((id) => (levels.get(id) ?? 0) === 1)
+      .map((id) => ({ id, level: 1 }));
+    const expanded = new Set<string>();
 
-  if (maxDepth >= 3) {
-    [...selected].forEach((id) => {
-      const level = levels.get(id) || 0;
-      if (level === -2) {
-        getParents(id, filters.mythology, relations).forEach((parent) =>
-          addEntity(selected, levels, hints, parent.id, -3, "Bisavô/bisavó")
-        );
-      }
-      if (level === 2) {
-        getChildren(id, filters.mythology, relations).forEach((child) =>
-          addEntity(selected, levels, hints, child.id, 3, "Bisneto(a)")
-        );
-      }
-    });
+    while (queue.length) {
+      const current = queue.shift()!;
+      if (expanded.has(current.id) || current.level >= maxDepth) continue;
+      expanded.add(current.id);
+
+      getChildren(current.id, filters.mythology, relations).forEach((child) => {
+        const childLevel = current.level + 1;
+        addEntity(selected, levels, hints, child.id, childLevel, "Descendente");
+        getParents(child.id, filters.mythology, relations).forEach((parent) => {
+          if (parent.id !== current.id) {
+            addEntity(selected, levels, hints, parent.id, current.level, "Parceiro");
+          }
+        });
+        queue.push({ id: child.id, level: childLevel });
+      });
+    }
   }
 
   return { selected, levels, hints, focusId };

@@ -125,12 +125,11 @@ describe("mythologyTreeService", () => {
     expect(defaultTreeFilters.mode).toBe("family");
     expect(defaultTreeFilters.focusId).toBe("cronos");
     expect(defaultTreeFilters.partnerId).toBe("reia");
-    expect(defaultTreeFilters.depth).toBe("1");
+    expect(defaultTreeFilters.depth).toBe("all");
     expect(nodeIds).toEqual(
       expect.arrayContaining(["cronos", "reia", "hestia", "demeter", "hera", "hades", "poseidon", "zeus"])
     );
-    expect(nodeIds).not.toContain("apolo-grego");
-    expect(nodeIds.length).toBeLessThan(14);
+    expect(nodeIds).toEqual(expect.arrayContaining(["apolo-grego", "artemis", "heracles", "persefone"]));
   });
 
   it("calcula profundidade a partir do foco sem trazer entidades desconectadas", () => {
@@ -189,7 +188,7 @@ describe("mythologyTreeService", () => {
     const yValues = entityNodes.map((node) => node.y);
 
     expect(Math.min(...yValues)).toBe(0);
-    expect(Math.max(...yValues)).toBeLessThanOrEqual(260);
+    expect(Math.max(...yValues)).toBeGreaterThan(260);
     expect(entityNode(graph.nodes, "gaia").y).toBeLessThan(entityNode(graph.nodes, "cronos").y);
     expect(entityNode(graph.nodes, "zeus").y).toBeGreaterThan(entityNode(graph.nodes, "cronos").y);
   });
