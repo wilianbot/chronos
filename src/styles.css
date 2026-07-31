@@ -3176,6 +3176,28 @@ p {
   }
 }
 
+.myth-tree-shell:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  padding: 1rem;
+  overflow: auto;
+  background: var(--bg);
+}
+
+.myth-tree-shell:fullscreen .myth-tree-sidebar {
+  top: 0;
+  max-height: calc(100vh - 2rem);
+}
+
+.myth-tree-shell:fullscreen .myth-tree-main {
+  min-height: calc(100vh - 2rem);
+}
+
+.myth-tree-shell:fullscreen .myth-static-tree {
+  min-height: calc(100vh - 7rem);
+}
+
 @media (max-width: 768px) {
   .myth-tree-shell,
   .myth-entity-route-grid {

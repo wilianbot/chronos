@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Copy, Focus, Maximize2, RotateCcw } from "lucide-react";
 import type { MythologicalEntity } from "../../../types/mythologyTree";
 
@@ -6,12 +5,14 @@ export function MythologyTreeToolbar({
   selectedEntity,
   onFocus,
   onFullTree,
-  onCopy
+  onCopy,
+  onFullscreen
 }: {
   selectedEntity?: MythologicalEntity;
   onFocus: () => void;
   onFullTree: () => void;
   onCopy: () => void;
+  onFullscreen: () => void;
 }) {
   return (
     <div className="myth-tree-toolbar" aria-label="Controles da árvore">
@@ -24,11 +25,9 @@ export function MythologyTreeToolbar({
       <button className="button secondary compact" type="button" onClick={onCopy} disabled={!selectedEntity}>
         <Copy size={16} /> Copiar link
       </button>
-      {selectedEntity?.pageRoute && (
-        <Link className="button primary compact" to={selectedEntity.pageRoute}>
+      <button className="button primary compact myth-full-page-button" type="button" onClick={onFullscreen}>
           <Maximize2 size={16} /> Ver página completa
-        </Link>
-      )}
+      </button>
     </div>
   );
 }

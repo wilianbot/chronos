@@ -124,6 +124,11 @@ export function MythologyTree() {
               updateFilter("showMinimap", true);
             }}
             onCopy={() => copyUrl()}
+            onFullscreen={() => {
+              const tree = document.querySelector<HTMLElement>(".myth-tree-shell");
+              if (!document.fullscreenElement) void tree?.requestFullscreen();
+              else void document.exitFullscreen();
+            }}
           />
           {graph.isComplete ? (
             <p className="tree-note compact-note myth-tree-complete-note">
